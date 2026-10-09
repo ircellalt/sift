@@ -5,7 +5,6 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sign in · SIFT</title>
-<link rel="icon" type="image/png" href="../assets/images/sift-logo.png">
 <style>
 @font-face{font-family:'Outfit';src:url('../assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
 @font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
@@ -45,6 +44,13 @@ input.bad{border-color:var(--bad)}
 @keyframes siftShine{to{background-position:200% 0}}
 @media (prefers-reduced-motion:reduce){#siftProgress.run::before{animation:none;transform:scaleX(.5)}}
 </style>
+<style id="sift-fa-type">
+@font-face{font-family:'Outfit';src:url('../assets/fonts/vazirmatn-variable.woff2') format('woff2');font-weight:100 900;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200E;}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/vazirmatn-variable.woff2') format('woff2');font-weight:100 900;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200E;}
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/images/icon-192.png">
 </head>
 <body>
 <div id="siftProgress" aria-hidden="true"></div>
