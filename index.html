@@ -20,6 +20,34 @@
 <style>
 /* ------------------------------------------------------------------ fonts */
 @font-face{
+  font-family:'YekanBakh';
+  font-style:normal;
+  font-weight:300;
+  font-display:swap;
+  src:url('assets/fonts/YekanBakh-Light.woff2') format('woff2');
+}
+@font-face{
+  font-family:'YekanBakh';
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+  src:url('assets/fonts/YekanBakh-Regular.woff2') format('woff2');
+}
+@font-face{
+  font-family:'YekanBakh';
+  font-style:normal;
+  font-weight:600;
+  font-display:swap;
+  src:url('assets/fonts/YekanBakh-SemiBold.woff2') format('woff2');
+}
+@font-face{
+  font-family:'YekanBakh';
+  font-style:normal;
+  font-weight:700;
+  font-display:swap;
+  src:url('assets/fonts/YekanBakh-Bold.woff2') format('woff2');
+}
+@font-face{
   font-family:'Outfit';
   font-style:normal;
   font-weight:100 900;
@@ -58,7 +86,7 @@
 
 .brand-lock{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;color:inherit}
 .brandmark{width:36px;height:36px;object-fit:contain;flex:none;filter:drop-shadow(0 4px 14px rgba(87,184,255,.28))}
-.brandword{font-family:var(--font-display,'Outfit',sans-serif);font-weight:600;font-size:1.05rem;letter-spacing:.14em}
+.brandword{font-family:var(--font-display);font-weight:600;font-size:1.05rem;letter-spacing:.14em}
 .footer__wm-text{display:block;font-family:'Outfit',sans-serif;font-weight:700;font-size:clamp(5rem,22vw,15rem);letter-spacing:-.04em;line-height:.9;background:linear-gradient(180deg,rgba(138,209,255,.22),rgba(87,184,255,0) 85%);-webkit-background-clip:text;background-clip:text;color:transparent;text-align:center;user-select:none}
 </style>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/Outfit-Latin.woff2" crossorigin>
@@ -146,9 +174,9 @@
   --el-inset: inset 0 1px 0 rgba(255,255,255,.06);
 
   /* type */
-  --font-display:'Outfit', 'SIFT Display Fallback', system-ui, sans-serif;
-  --font-body:   'Outfit', 'SIFT Display Fallback', system-ui, sans-serif;
-  --font-mono:   'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display:'YekanBakh', 'Tahoma', system-ui, sans-serif;
+  --font-body:   'YekanBakh', 'Tahoma', system-ui, sans-serif;
+  --font-mono:   'YekanBakh', 'Tahoma', system-ui, sans-serif;
 
   /* motion */
   --ease-out:  cubic-bezier(.22,1,.36,1);
@@ -1727,6 +1755,12 @@ body.glow-on #siftGlow{opacity:1}
 .btn{transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,background .25s,border-color .25s}
 .btn:hover{box-shadow:0 10px 30px -8px rgba(78,168,255,.45)}
 @media (prefers-reduced-motion:reduce){#siftGlow{display:none}html.js .fx-reveal{opacity:1;transform:none;transition:none}}
+</style>
+<style id="yekan-global">
+/* Site-wide font: YekanBakh. Overrides inline and hard-coded font stacks. */
+html, body, *, *::before, *::after, button, input, select, textarea, option {
+  font-family:'YekanBakh', 'Tahoma', system-ui, sans-serif !important;
+}
 </style>
 </head>
 <body>
