@@ -7,8 +7,8 @@
 <title>Game hosting · SIFT</title>
 <meta name="description" content="Minecraft hosting on bare-metal Ryzen nodes with NVMe Gen4 storage and always-on DDoS scrubbing.">
 <style>
-@font-face{font-family:'Outfit';src:url('../assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
-@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+@font-face{font-family:'Outfit';src:url('../assets/fonts/Outfit-Latin.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/JetBrainsMono-Latin.woff2') format('woff2');font-weight:100 800;font-display:swap}
 
 :root{--bg:#08090B;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--blue2:#8AD1FF;--copper:#C87A43;--ok:#4ED08A}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.7 'Outfit',system-ui,sans-serif}
@@ -70,12 +70,24 @@ footer{border-top:1px solid var(--line);padding:46px 0 36px;color:var(--dim);fon
 @media (prefers-reduced-motion:reduce){#siftProgress.run::before{animation:none;transform:scaleX(.5)}}
 </style>
 <style id="sift-fa-type">
-@font-face{font-family:'Outfit';src:url('../assets/fonts/vazirmatn-variable.woff2') format('woff2');font-weight:100 900;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200E;}
-@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/vazirmatn-variable.woff2') format('woff2');font-weight:100 900;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200E;}
+@font-face{font-family:'Outfit';src:url('../assets/fonts/YekanBakh-Light.woff2') format('woff2');font-weight:300;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200E;}
+@font-face{font-family:'Outfit';src:url('../assets/fonts/YekanBakh-Regular.woff2') format('woff2');font-weight:400;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200E;}
+@font-face{font-family:'Outfit';src:url('../assets/fonts/YekanBakh-SemiBold.woff2') format('woff2');font-weight:600;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200E;}
+@font-face{font-family:'Outfit';src:url('../assets/fonts/YekanBakh-Bold.woff2') format('woff2');font-weight:700;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200E;}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/YekanBakh-Light.woff2') format('woff2');font-weight:300;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200E;}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/YekanBakh-Regular.woff2') format('woff2');font-weight:400;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200E;}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/YekanBakh-SemiBold.woff2') format('woff2');font-weight:600;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200E;}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/YekanBakh-Bold.woff2') format('woff2');font-weight:700;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200E;}
 </style>
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="../assets/images/icon-192.png">
+<style id="sift-smooth">
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+#siftScroll{position:fixed;top:0;left:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#4ea8ff,#3ddc97);box-shadow:0 0 10px rgba(78,168,255,.6);z-index:100000;pointer-events:none}
+body.scrolled header,body.scrolled .nav,body.scrolled .topbar{box-shadow:0 10px 30px -12px rgba(0,0,0,.6)}
+</style>
 </head>
 <body>
 <div id="siftProgress" aria-hidden="true"></div>
@@ -204,6 +216,30 @@ footer{border-top:1px solid var(--line);padding:46px 0 36px;color:var(--dim);fon
     start();
   }, true);
   window.addEventListener('beforeunload', function(){ start(); });
+})();
+</script>
+<div id="siftScroll" aria-hidden="true"></div>
+<script id="sift-smooth-js">
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bar=document.getElementById('siftScroll');
+  function onScroll(){
+    var h=document.documentElement; var max=h.scrollHeight-h.clientHeight;
+    var p=max>0?(h.scrollTop/max):0;
+    if(bar) bar.style.transform='scaleX('+p.toFixed(4)+')';
+    document.body.classList.toggle('scrolled', h.scrollTop>12);
+  }
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  // smooth in-page anchors with fixed-header offset
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href^="#"]'); if(!a) return;
+    var id=a.getAttribute('href').slice(1); if(!id) return;
+    var t=document.getElementById(id); if(!t) return;
+    e.preventDefault();
+    var y=t.getBoundingClientRect().top+scrollY-(document.querySelector('header')?document.querySelector('header').offsetHeight:0)-16;
+    scrollTo({top:y,behavior:reduce?'auto':'smooth'});
+    history.pushState(null,'','#'+id);
+  });
 })();
 </script>
 </body>
