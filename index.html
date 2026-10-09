@@ -1719,14 +1719,14 @@ html{scroll-behavior:smooth;scroll-padding-top:90px}
 body.scrolled header,body.scrolled .nav,body.scrolled .topbar{box-shadow:0 10px 30px -12px rgba(0,0,0,.6)}
 </style>
 <style id="sift-home-fx">
-html.js .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
-html.js .reveal.in{opacity:1;transform:none}
+html.js .fx-reveal{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+html.js .fx-reveal.fx-in{opacity:1;transform:none}
 #siftGlow{position:fixed;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(78,168,255,.14),rgba(78,168,255,0) 60%);z-index:0;transition:opacity .4s;opacity:0;will-change:transform}
 body.glow-on #siftGlow{opacity:1}
 [class*="card"]{will-change:transform}
 .btn{transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,background .25s,border-color .25s}
 .btn:hover{box-shadow:0 10px 30px -8px rgba(78,168,255,.45)}
-@media (prefers-reduced-motion:reduce){#siftGlow{display:none}html.js .reveal{opacity:1;transform:none;transition:none}}
+@media (prefers-reduced-motion:reduce){#siftGlow{display:none}html.js .fx-reveal{opacity:1;transform:none;transition:none}}
 </style>
 </head>
 <body>
@@ -6427,14 +6427,14 @@ body.glow-on #siftGlow{opacity:1}
   document.documentElement.classList.add('js');
   var glow=document.createElement('div'); glow.id='siftGlow'; glow.setAttribute('aria-hidden','true'); document.body.appendChild(glow);
   // reveal sections and cards as they scroll in
-  var targets=Array.prototype.slice.call(document.querySelectorAll('main section, section, [class*="card"]')).filter(function(el){return el.offsetHeight>40 && !el.closest('header,nav,.drawer,.dropdown');});
-  targets.forEach(function(el){ el.classList.add('reveal'); });
+  var targets=Array.prototype.slice.call(document.querySelectorAll('main section, section, [class*="card"]')).filter(function(el){return el.offsetHeight>40 && !el.closest('header,nav,.drawer,.dropdown,.reveal,.fx-reveal');});
+  targets.forEach(function(el){ el.classList.add('fx-reveal'); });
   if('IntersectionObserver' in window && !reduce){
     var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('fx-in'); io.unobserve(en.target);} });
     },{threshold:0.12, rootMargin:'0px 0px -40px 0px'});
     targets.forEach(function(el){ io.observe(el); });
-  } else { targets.forEach(function(el){ el.classList.add('in'); }); }
+  } else { targets.forEach(function(el){ el.classList.add('fx-in'); }); }
   if(fine && !reduce){
     var gx=0,gy=0,tx=0,ty=0,raf=null;
     addEventListener('pointermove',function(e){
