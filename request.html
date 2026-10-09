@@ -62,8 +62,8 @@ input.bad,select.bad{border-color:var(--bad)}
 </head>
 <body>
 <nav>
-  <a href="index.html" style="display:flex;align-items:center;gap:10px"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
-  <a class="back" href="index.html">← Back to site</a>
+  <a href="./" style="display:flex;align-items:center;gap:10px"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+  <a class="back" href="./">← Back to site</a>
 </nav>
 
 <main class="wrap">
@@ -186,7 +186,7 @@ input.bad,select.bad{border-color:var(--bad)}
     try{
       const r=await fetch(API+'/api/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,verify})});
       const d=await r.json().catch(()=>({}));
-      history.replaceState(null,'','request.html');
+      history.replaceState(null,'','request');
       if(!r.ok){ banner('err',d.error||'This confirmation link is not valid.'); showForm(); return; }
       const link=JSON.parse(localStorage.getItem(KEY)||'null');
       if(link&&link.id===id){ banner('ok','Email confirmed. Your request is in the queue.'); startStatus(); }
@@ -223,7 +223,7 @@ input.bad,select.bad{border-color:var(--bad)}
     }
   });
 
-  $('newReq').onclick=()=>{ localStorage.removeItem(KEY); history.replaceState(null,'','request.html'); showForm(); };
+  $('newReq').onclick=()=>{ localStorage.removeItem(KEY); history.replaceState(null,'','request'); showForm(); };
 
   if(q.get('verify')&&q.get('id')) confirmEmail(q.get('id'), q.get('verify'));
   else if(localStorage.getItem(KEY)) startStatus();

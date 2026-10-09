@@ -66,16 +66,16 @@ input.bad{border-color:var(--bad)}
 <body>
 <div class="app">
   <aside>
-    <a class="brand" href="index.html"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+    <a class="brand" href="./"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
     <nav class="nav">
-      <a href="dashboard.html">Servers</a>
-      <a href="pricing.html">Deploy new server</a>
-      <a class="on" href="billing.html">Billing</a>
-      <a href="account.html">Account</a>
+      <a href="dashboard">Servers</a>
+      <a href="pricing">Deploy new server</a>
+      <a class="on" href="billing">Billing</a>
+      <a href="account">Account</a>
       <div class="sep"></div>
-      <a href="support.html">Support</a>
-      <a href="docs.html">Docs</a>
-      <a href="status.html">Status</a>
+      <a href="support">Support</a>
+      <a href="docs">Docs</a>
+      <a href="status">Status</a>
     </nav>
     <div class="me" id="me"></div>
   </aside>
@@ -88,7 +88,7 @@ input.bad{border-color:var(--bad)}
     <div id="gate" class="card gate hide">
       <h2 style="font-weight:500;margin-top:0">Sign in to see billing</h2>
       <p>Invoices and payment details are only shown to the account owner.</p>
-      <a class="btn btn--primary" href="login.html?next=billing.html">Sign in</a>
+      <a class="btn btn--primary" href="login?next=billing">Sign in</a>
     </div>
 
     <div id="panel" class="hide">
@@ -102,7 +102,7 @@ input.bad{border-color:var(--bad)}
         <div class="card">
           <h2>Servers <span class="label" id="sCount">0</span></h2>
           <div id="servers"></div>
-          <div class="empty" id="sEmpty"><b>No servers on this account</b><p>Nothing is billed until a server is running. <a href="pricing.html" style="color:var(--blue)">Choose a plan</a> to deploy one.</p></div>
+          <div class="empty" id="sEmpty"><b>No servers on this account</b><p>Nothing is billed until a server is running. <a href="pricing" style="color:var(--blue)">Choose a plan</a> to deploy one.</p></div>
         </div>
 
         <div style="display:grid;gap:18px;align-content:start">
@@ -151,7 +151,7 @@ input.bad{border-color:var(--bad)}
 
   if(!sess){
     $('gate').classList.remove('hide');
-    $('me').innerHTML='<b>Guest</b><a href="login.html" style="color:var(--blue)">Sign in →</a>';
+    $('me').innerHTML='<b>Guest</b><a href="login" style="color:var(--blue)">Sign in →</a>';
     return;
   }
   $('panel').classList.remove('hide');

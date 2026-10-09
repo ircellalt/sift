@@ -72,12 +72,12 @@ footer{border-top:1px solid var(--line);padding:46px 0 36px;color:var(--dim);fon
 </head>
 <body>
 <nav>
-  <a class="brand-lock" href="index.html"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
+  <a class="brand-lock" href="./"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
   <div class="nav-links">
-    <a href="hosting.html">Game hosting</a><a href="pricing.html" aria-current="page">Pricing</a><a href="locations.html">Locations</a><a href="docs.html">Docs</a><a href="status.html">Status</a><a href="support.html">Support</a>
+    <a href="hosting">Game hosting</a><a href="pricing" aria-current="page">Pricing</a><a href="locations">Locations</a><a href="docs">Docs</a><a href="status">Status</a><a href="support">Support</a>
   </div>
   <div class="nav-right">
-    <a class="btn btn--ghost" href="login.html" id="navAuth">Sign in</a>
+    <a class="btn btn--ghost" href="login" id="navAuth">Sign in</a>
     <a class="btn btn--primary" href="#plans">Deploy a server</a>
   </div>
 </nav>
@@ -208,7 +208,7 @@ footer{border-top:1px solid var(--line);padding:46px 0 36px;color:var(--dim);fon
   function toast(msg){const t=$('#toast');t.innerHTML=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3800);}
 
   const sess=session();
-  if(sess){$('#navAuth').textContent=sess.first||'Account';$('#navAuth').href='dashboard.html';}
+  if(sess){$('#navAuth').textContent=sess.first||'Account';$('#navAuth').href='dashboard';}
 
   $$('[data-cycle]').forEach(b=>b.onclick=()=>{cycle=b.dataset.cycle;$$('[data-cycle]').forEach(x=>x.classList.toggle('on',x===b));$('#oCycle').value=cycle;renderPlans();});
   $$('[data-cur]').forEach(b=>b.onclick=()=>{cur=b.dataset.cur;$$('[data-cur]').forEach(x=>x.classList.toggle('on',x===b));renderPlans();});
@@ -228,7 +228,7 @@ footer{border-top:1px solid var(--line);padding:46px 0 36px;color:var(--dim);fon
     if(!ok) return;
     const params=new URLSearchParams({name,plan:selected,region:$('#oRegion').value,software:$('#oSoft').value,version:$('#oVer').value,cycle});
     toast('Opening your request…');
-    setTimeout(()=>location.href='request.html?'+params.toString(),500);
+    setTimeout(()=>location.href='request?'+params.toString(),500);
   });
 
   renderPlans();

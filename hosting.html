@@ -63,13 +63,13 @@ footer{border-top:1px solid var(--line);padding:46px 0 36px;color:var(--dim);fon
 </head>
 <body>
 <nav>
-  <a class="brand-lock" href="index.html"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
+  <a class="brand-lock" href="./"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
   <div class="nav-links">
-    <a href="hosting.html" aria-current="page">Game hosting</a><a href="pricing.html">Pricing</a><a href="locations.html">Locations</a><a href="docs.html">Docs</a><a href="status.html">Status</a><a href="support.html">Support</a>
+    <a href="hosting" aria-current="page">Game hosting</a><a href="pricing">Pricing</a><a href="locations">Locations</a><a href="docs">Docs</a><a href="status">Status</a><a href="support">Support</a>
   </div>
   <div class="nav-right">
-    <a class="btn btn--ghost" href="login.html" data-auth>Sign in</a>
-    <a class="btn btn--primary" href="pricing.html">Deploy a server</a>
+    <a class="btn btn--ghost" href="login" data-auth>Sign in</a>
+    <a class="btn btn--primary" href="pricing">Deploy a server</a>
   </div>
 </nav>
 
@@ -79,8 +79,8 @@ footer{border-top:1px solid var(--line);padding:46px 0 36px;color:var(--dim);fon
     <h1>A server that stays the same size as your world.</h1>
     <p class="lead">Java and Bedrock-friendly stacks on dedicated Ryzen cores. Paper, Purpur, Fabric, NeoForge and proxies, all one-click from the panel. Your world loads from NVMe, not a shared disk queue.</p>
     <div class="hero__cta">
-      <a class="btn btn--primary" href="pricing.html">Choose a plan →</a>
-      <a class="btn" href="docs.html">Read the setup guide</a>
+      <a class="btn btn--primary" href="pricing">Choose a plan →</a>
+      <a class="btn" href="docs">Read the setup guide</a>
     </div>
   </div>
   <div class="console" aria-label="Example console">
@@ -139,8 +139,8 @@ footer{border-top:1px solid var(--line);padding:46px 0 36px;color:var(--dim);fon
     <h2>Your world, online before your kettle boils.</h2>
     <p>Start with 24 hours free, no card required. Measure the latency from where your players actually live, then decide.</p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-      <a class="btn btn--primary" href="pricing.html">Deploy a server →</a>
-      <a class="btn" href="locations.html">See locations</a>
+      <a class="btn btn--primary" href="pricing">Deploy a server →</a>
+      <a class="btn" href="locations">See locations</a>
     </div>
   </div>
 </section>
@@ -150,7 +150,7 @@ footer{border-top:1px solid var(--line);padding:46px 0 36px;color:var(--dim);fon
 <script>
 (function(){
   const s=(()=>{try{return JSON.parse(localStorage.getItem('sift.v1.session'))}catch(e){return null}})();
-  if(s){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=s.first||'Account';a.href='dashboard.html';});}
+  if(s){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=s.first||'Account';a.href='dashboard';});}
   const lines=[
     ['i','[16:50:24] INFO  Starting minecraft server version 1.21.4'],
     ['','[16:50:24] INFO  Loading properties from server.properties'],

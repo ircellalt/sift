@@ -92,8 +92,8 @@ textarea{font:400 .8rem/1.6 'JetBrains Mono';min-height:300px;resize:vertical}
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
-  <span class="crumb">/ <a href="dashboard.html" style="color:var(--mute)">Servers</a> / <span id="crumbName">…</span></span>
+  <a class="brand" href="./"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+  <span class="crumb">/ <a href="dashboard" style="color:var(--mute)">Servers</a> / <span id="crumbName">…</span></span>
   <div class="right" id="powerBtns">
     <button class="btn btn--ok" id="btnStart">Start</button>
     <button class="btn" id="btnRestart">Restart</button>
@@ -105,12 +105,12 @@ textarea{font:400 .8rem/1.6 'JetBrains Mono';min-height:300px;resize:vertical}
   <div id="gate" class="card gate hide">
     <h2>Sign in to manage this server</h2>
     <p>Server controls are only available to the account that deployed it.</p>
-    <a class="btn btn--ok" href="login.html">Sign in</a>
+    <a class="btn btn--ok" href="login">Sign in</a>
   </div>
   <div id="notFound" class="card gate hide">
     <h2>We couldn’t find that server</h2>
     <p>It may have been removed, or the link is from a different account.</p>
-    <a class="btn" href="dashboard.html">Back to servers</a>
+    <a class="btn" href="dashboard">Back to servers</a>
   </div>
 
   <div id="main" class="hide">
@@ -455,7 +455,7 @@ enable-query=false`,
     confirmBox('Delete '+order.name+'?','This removes the world, backups and files permanently.','Delete server',()=>{
       const all=read('sift.v1.orders',[]).filter(o=>o.id!==id);write('sift.v1.orders',all);
       ['file','backups','whitelist','schedules'].forEach(k=>{Object.keys(localStorage).filter(x=>x.startsWith('sift.v1.'+k)&&x.endsWith(id)||x.startsWith('sift.v1.'+k+'.'+id)).forEach(x=>localStorage.removeItem(x));});
-      toast('Server deleted.');setTimeout(()=>location.href='dashboard.html',700);
+      toast('Server deleted.');setTimeout(()=>location.href='dashboard',700);
     });
   };
 

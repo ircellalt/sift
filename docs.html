@@ -52,13 +52,13 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
 </head>
 <body>
 <nav>
-  <a class="brand-lock" href="index.html"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
+  <a class="brand-lock" href="./"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
   <div class="nav-links">
-    <a href="hosting.html">Game hosting</a><a href="pricing.html">Pricing</a><a href="locations.html">Locations</a><a href="docs.html" aria-current="page">Docs</a><a href="status.html">Status</a><a href="support.html">Support</a>
+    <a href="hosting">Game hosting</a><a href="pricing">Pricing</a><a href="locations">Locations</a><a href="docs" aria-current="page">Docs</a><a href="status">Status</a><a href="support">Support</a>
   </div>
   <div class="nav-right">
-    <a class="btn btn--ghost" href="login.html" data-auth>Sign in</a>
-    <a class="btn btn--primary" href="pricing.html">Deploy a server</a>
+    <a class="btn btn--ghost" href="login" data-auth>Sign in</a>
+    <a class="btn btn--primary" href="pricing">Deploy a server</a>
   </div>
 </nav>
 
@@ -84,7 +84,7 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
     <p>Everything you need to get a Minecraft server online, keep it healthy and understand what you're paying for. Written by the engineers who run the fleet.</p>
 
     <h2 id="first">Deploy your first server</h2>
-    <p>Choose a plan on the <a href="pricing.html" style="color:var(--blue)">pricing page</a>, pick a region and a name. Your server gets an address of <code>name.sift.gg</code> straight away. Provisioning takes about 47 seconds on average and runs through twelve logged steps.</p>
+    <p>Choose a plan on the <a href="pricing" style="color:var(--blue)">pricing page</a>, pick a region and a name. Your server gets an address of <code>name.sift.gg</code> straight away. Provisioning takes about 47 seconds on average and runs through twelve logged steps.</p>
     <pre>/whitelist add YourName
 /op YourName
 /gamemode survival</pre>
@@ -111,7 +111,7 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
     <h2 id="2fa">Two-factor authentication</h2>
     <p>Two-factor is required before you change billing details or remove a server. Set it up from your account settings once you have signed in.</p>
 
-    <p class="none" id="none">No articles match that search. Try another word, or <a href="support.html" style="color:var(--blue)">open a support ticket</a>.</p>
+    <p class="none" id="none">No articles match that search. Try another word, or <a href="support" style="color:var(--blue)">open a support ticket</a>.</p>
   </main>
 </div>
 
@@ -133,7 +133,7 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
     });
     document.getElementById('none').style.display=shown?'none':'block';
   });
-  try{const s=JSON.parse(localStorage.getItem('sift.v1.session'));if(s){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=s.first||'Account';a.href='dashboard.html';});}}catch(e){}
+  try{const s=JSON.parse(localStorage.getItem('sift.v1.session'));if(s){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=s.first||'Account';a.href='dashboard';});}}catch(e){}
 })();
 </script>
 </body>

@@ -55,13 +55,13 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
 </head>
 <body>
 <nav>
-  <a class="brand-lock" href="index.html"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
+  <a class="brand-lock" href="./"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
   <div class="nav-links">
-    <a href="hosting.html">Game hosting</a><a href="pricing.html">Pricing</a><a href="locations.html">Locations</a><a href="docs.html">Docs</a><a href="status.html" aria-current="page">Status</a><a href="support.html">Support</a>
+    <a href="hosting">Game hosting</a><a href="pricing">Pricing</a><a href="locations">Locations</a><a href="docs">Docs</a><a href="status" aria-current="page">Status</a><a href="support">Support</a>
   </div>
   <div class="nav-right">
-    <a class="btn btn--ghost" href="login.html" data-auth>Sign in</a>
-    <a class="btn btn--primary" href="pricing.html">Deploy a server</a>
+    <a class="btn btn--ghost" href="login" data-auth>Sign in</a>
+    <a class="btn btn--primary" href="pricing">Deploy a server</a>
   </div>
 </nav>
 
@@ -117,7 +117,7 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
     m.style.color='#4ED08A';m.textContent='Subscribed. Confirmation sent to '+v+'.';
     document.getElementById('em').value='';
   });
-  try{const s=JSON.parse(localStorage.getItem('sift.v1.session'));if(s){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=s.first||'Account';a.href='dashboard.html';});}}catch(e){}
+  try{const s=JSON.parse(localStorage.getItem('sift.v1.session'));if(s){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=s.first||'Account';a.href='dashboard';});}}catch(e){}
 })();
 </script>
 </body>

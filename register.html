@@ -38,7 +38,7 @@ input:focus{border-color:var(--blue)}input.bad{border-color:var(--bad)}
 </head>
 <body>
 <main class="box">
-  <a class="brand" href="index.html"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+  <a class="brand" href="./"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
   <div class="panel">
     <h1>Create your account</h1>
     <p class="sub">Free to join. You only pay when a server is running.</p>
@@ -55,13 +55,13 @@ input:focus{border-color:var(--blue)}input.bad{border-color:var(--bad)}
       <button class="btn" type="submit">Create account</button>
     </form>
   </div>
-  <p class="foot">Already have an account? <a href="login.html">Sign in</a></p>
+  <p class="foot">Already have an account? <a href="login">Sign in</a></p>
 </main>
 <script>
 (function(){
   const $=id=>document.getElementById(id);
   const q=new URLSearchParams(location.search);
-  const next=q.get('next')||'dashboard.html';
+  const next=q.get('next')||'dashboard';
   function users(){try{return JSON.parse(localStorage.getItem('sift.v1.users'))||[]}catch(e){return[]}}
   function strength(p){let s=0;if(p.length>=10)s++;if(/[A-Z]/.test(p)&&/[a-z]/.test(p))s++;if(/\d/.test(p))s++;if(/[^A-Za-z0-9]/.test(p))s++;return s;}
   $('pw').addEventListener('input',e=>{const s=strength(e.target.value);const m=$('meter');m.style.width=(s*25)+'%';m.style.background=s<2?'#F2685F':s<4?'#E9B75C':'#4ED08A';});

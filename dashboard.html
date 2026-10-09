@@ -71,18 +71,18 @@ h1{font-weight:500;font-size:1.7rem;letter-spacing:-.02em;margin:0}
 <body>
 <div class="app">
   <aside id="side">
-    <a class="brand" href="index.html"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+    <a class="brand" href="./"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
     <nav class="nav">
-      <a class="on" href="dashboard.html">Servers <span class="n" id="cnt">0</span></a>
-      <a href="pricing.html">Deploy new server</a>
-      <a href="billing.html">Billing</a>
-      <a href="account.html">Account</a>
+      <a class="on" href="dashboard">Servers <span class="n" id="cnt">0</span></a>
+      <a href="pricing">Deploy new server</a>
+      <a href="billing">Billing</a>
+      <a href="account">Account</a>
       <div class="sep"></div>
-      <a href="support.html">Support</a>
-      <a href="docs.html">Docs</a>
-      <a href="status.html">Status</a>
+      <a href="support">Support</a>
+      <a href="docs">Docs</a>
+      <a href="status">Status</a>
     </nav>
-    <div class="me" id="me"><span class="mono" style="font-size:.7rem;color:var(--dim)">NOT SIGNED IN</span><b>Guest</b><a href="login.html" style="color:var(--blue);font-size:.85rem">Sign in →</a></div>
+    <div class="me" id="me"><span class="mono" style="font-size:.7rem;color:var(--dim)">NOT SIGNED IN</span><b>Guest</b><a href="login" style="color:var(--blue);font-size:.85rem">Sign in →</a></div>
   </aside>
 
   <main>
@@ -93,7 +93,7 @@ h1{font-weight:500;font-size:1.7rem;letter-spacing:-.02em;margin:0}
         <div class="sub" id="sub">Sign in to see the servers on your account.</div>
       </div>
       <div class="right">
-        <a class="btn btn--primary" href="pricing.html">Deploy a server</a>
+        <a class="btn btn--primary" href="pricing">Deploy a server</a>
         <button class="btn" id="signout" style="display:none">Sign out</button>
       </div>
     </header>
@@ -103,8 +103,8 @@ h1{font-weight:500;font-size:1.7rem;letter-spacing:-.02em;margin:0}
       <h3>Sign in to open your panel</h3>
       <p>Your servers, console, billing and tickets live behind your account. Nothing is shown until you sign in.</p>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <a class="btn btn--primary" href="login.html?next=dashboard.html">Sign in</a>
-        <a class="btn" href="register.html?next=dashboard.html">Create account</a>
+        <a class="btn btn--primary" href="login?next=dashboard">Sign in</a>
+        <a class="btn" href="register?next=dashboard">Create account</a>
       </div>
     </div>
 
@@ -117,13 +117,13 @@ h1{font-weight:500;font-size:1.7rem;letter-spacing:-.02em;margin:0}
       </div>
 
       <div class="card" id="serverCard">
-        <div class="panel-title"><h2>Servers</h2><a class="btn" href="pricing.html" style="padding:7px 13px;font-size:.82rem">+ New</a></div>
+        <div class="panel-title"><h2>Servers</h2><a class="btn" href="pricing" style="padding:7px 13px;font-size:.82rem">+ New</a></div>
         <div id="serverList" class="list"></div>
         <div id="serverEmpty" class="empty hide">
           <div class="ring">+</div>
           <h3>No servers yet</h3>
           <p>Deploy your first server and it will appear here, with its address, console and resource graphs. You are charged only once it is running.</p>
-          <a class="btn btn--primary" href="pricing.html">Choose a plan</a>
+          <a class="btn btn--primary" href="pricing">Choose a plan</a>
         </div>
       </div>
 
@@ -163,7 +163,7 @@ h1{font-weight:500;font-size:1.7rem;letter-spacing:-.02em;margin:0}
 
   if(!sess){
     $('gate').classList.remove('hide');
-    $('me').innerHTML='<span class="mono" style="font-size:.7rem;color:var(--dim)">NOT SIGNED IN</span><b>Guest</b><a href="login.html" style="color:var(--blue);font-size:.85rem">Sign in →</a>';
+    $('me').innerHTML='<span class="mono" style="font-size:.7rem;color:var(--dim)">NOT SIGNED IN</span><b>Guest</b><a href="login" style="color:var(--blue);font-size:.85rem">Sign in →</a>';
     return;
   }
   $('gate').classList.add('hide');
@@ -184,7 +184,7 @@ h1{font-weight:500;font-size:1.7rem;letter-spacing:-.02em;margin:0}
   if(orders.length){
     $('serverEmpty').classList.add('hide');
     $('serverList').innerHTML=orders.map(o=>{const s=status(o);return `
-      <a class="srv" href="server.html?id=${encodeURIComponent(o.id)}">
+      <a class="srv" href="server?id=${encodeURIComponent(o.id)}">
         <div><b>${o.name}</b><div class="m">${o.address} · ${o.region||''}</div></div>
         <div><div class="label">Software</div><div class="mono" style="font-size:.85rem;margin-top:4px">${o.software||'Paper'} ${o.version||''}</div></div>
         <div><div class="label">Plan</div><div class="mono" style="font-size:.85rem;margin-top:4px">${o.plan||o.planId} · ${o.priceDisplay||''}</div></div>

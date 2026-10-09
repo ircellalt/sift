@@ -64,16 +64,16 @@ input.bad{border-color:var(--bad)}
 <body>
 <div class="app">
   <aside>
-    <a class="brand" href="index.html"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+    <a class="brand" href="./"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
     <nav class="nav">
-      <a href="dashboard.html">Servers</a>
-      <a href="pricing.html">Deploy new server</a>
-      <a href="billing.html">Billing</a>
-      <a class="on" href="account.html">Account</a>
+      <a href="dashboard">Servers</a>
+      <a href="pricing">Deploy new server</a>
+      <a href="billing">Billing</a>
+      <a class="on" href="account">Account</a>
       <div class="sep"></div>
-      <a href="support.html">Support</a>
-      <a href="docs.html">Docs</a>
-      <a href="status.html">Status</a>
+      <a href="support">Support</a>
+      <a href="docs">Docs</a>
+      <a href="status">Status</a>
     </nav>
     <div class="me" id="me"></div>
   </aside>
@@ -85,7 +85,7 @@ input.bad{border-color:var(--bad)}
     <div id="gate" class="card gate hide">
       <h2 style="font-weight:500;margin-top:0">Sign in to manage your account</h2>
       <p>Account settings are only available once you have signed in.</p>
-      <a class="btn btn--primary" href="login.html?next=account.html">Sign in</a>
+      <a class="btn btn--primary" href="login?next=account">Sign in</a>
     </div>
 
     <div id="panel" class="hide">
@@ -151,7 +151,7 @@ input.bad{border-color:var(--bad)}
   function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   const sess=read('sift.v1.session',null);
 
-  if(!sess){$('gate').classList.remove('hide');$('me').innerHTML='<b>Guest</b><a href="login.html" style="color:var(--blue)">Sign in →</a>';return;}
+  if(!sess){$('gate').classList.remove('hide');$('me').innerHTML='<b>Guest</b><a href="login" style="color:var(--blue)">Sign in →</a>';return;}
   $('panel').classList.remove('hide');
   $('me').innerHTML='<b>'+esc(sess.first||'Account')+'</b><span class="mono" style="font-size:.75rem">'+esc(sess.accountId||'')+'</span>';
 
@@ -200,7 +200,7 @@ input.bad{border-color:var(--bad)}
 
   /* sessions */
   $('sessMeta').textContent='Signed in '+new Date(sess.createdAt||Date.now()).toLocaleDateString('en-GB')+' · '+(navigator.platform||'Browser');
-  $('signOutAll').onclick=()=>{localStorage.removeItem('sift.v1.session');toast('Signed out on this device.');setTimeout(()=>location.href='index.html',700);};
+  $('signOutAll').onclick=()=>{localStorage.removeItem('sift.v1.session');toast('Signed out on this device.');setTimeout(()=>location.href='./',700);};
 
   /* close account */
   $('cBtn').onclick=()=>{
@@ -210,7 +210,7 @@ input.bad{border-color:var(--bad)}
     if(!confirm('Close this account permanently?'))return;
     const all=read('sift.v1.users',[]).filter(x=>x.email!==sess.email);write('sift.v1.users',all);
     localStorage.removeItem('sift.v1.session');localStorage.removeItem('sift.v1.payment');
-    toast('Account closed. Thank you for trying SIFT.');setTimeout(()=>location.href='index.html',900);
+    toast('Account closed. Thank you for trying SIFT.');setTimeout(()=>location.href='./',900);
   };
 })();
 </script>

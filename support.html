@@ -59,13 +59,13 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
 </head>
 <body>
 <nav>
-  <a class="brand-lock" href="index.html"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
+  <a class="brand-lock" href="./"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
   <div class="nav-links">
-    <a href="hosting.html">Game hosting</a><a href="pricing.html">Pricing</a><a href="locations.html">Locations</a><a href="docs.html">Docs</a><a href="status.html">Status</a><a href="support.html" aria-current="page">Support</a>
+    <a href="hosting">Game hosting</a><a href="pricing">Pricing</a><a href="locations">Locations</a><a href="docs">Docs</a><a href="status">Status</a><a href="support" aria-current="page">Support</a>
   </div>
   <div class="nav-right">
-    <a class="btn btn--ghost" href="login.html" data-auth>Sign in</a>
-    <a class="btn btn--primary" href="pricing.html">Deploy a server</a>
+    <a class="btn btn--ghost" href="login" data-auth>Sign in</a>
+    <a class="btn btn--primary" href="pricing">Deploy a server</a>
   </div>
 </nav>
 
@@ -113,7 +113,7 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
   function renderTickets(){
     const list=read('sift.v1.tickets',[]);
     $('tlist').innerHTML=list.length?list.map(t=>`<div class="t"><div><b style="font-weight:500">${t.subject}</b><small class="mono">${t.ref} · ${new Date(t.createdAt).toLocaleDateString('en-GB')} · ${t.category}</small></div><span class="st">Awaiting reply</span></div>`).join('')
-      :`<div class="empty"><b>No tickets yet</b>When you open a ticket it will appear here with its reference and status.${sess?'':' <br><a href="login.html" style="color:var(--blue)">Sign in</a> to link tickets to your account.'}</div>`;
+      :`<div class="empty"><b>No tickets yet</b>When you open a ticket it will appear here with its reference and status.${sess?'':' <br><a href="login" style="color:var(--blue)">Sign in</a> to link tickets to your account.'}</div>`;
   }
   renderTickets();
 
@@ -137,7 +137,7 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
     toast('Ticket <span class="mono">'+ref+'</span> created. An engineer has it, and a reply will reach your email.');
   });
 
-  try{if(sess){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=sess.first||'Account';a.href='dashboard.html';});}}catch(e){}
+  try{if(sess){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=sess.first||'Account';a.href='dashboard';});}}catch(e){}
 })();
 </script>
 </body>

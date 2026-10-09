@@ -38,7 +38,7 @@ input.bad{border-color:var(--bad)}
 </head>
 <body>
 <main class="box">
-  <a class="brand" href="index.html"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+  <a class="brand" href="./"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
   <div class="panel">
     <h1>Sign in to your panel</h1>
     <p class="sub">Manage your servers, billing and tickets.</p>
@@ -50,13 +50,13 @@ input.bad{border-color:var(--bad)}
     </form>
     <div class="row"><span>Two-factor is enforced on billing changes.</span></div>
   </div>
-  <p class="foot">New to SIFT? <a href="register.html">Create an account</a></p>
+  <p class="foot">New to SIFT? <a href="register">Create an account</a></p>
 </main>
 <script>
 (function(){
   const $=id=>document.getElementById(id);
   const LOCK_KEY='sift.v1.lock', FAIL_KEY='sift.v1.fails';
-  const next=new URLSearchParams(location.search).get('next')||'dashboard.html';
+  const next=new URLSearchParams(location.search).get('next')||'dashboard';
   let lockTimer=null;
   function users(){try{return JSON.parse(localStorage.getItem('sift.v1.users'))||[]}catch(e){return[]}}
 
