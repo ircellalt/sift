@@ -6,10 +6,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Request desk · SIFT team</title>
-<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<link rel="icon" type="image/png" href="../assets/images/sift-logo.png">
 <style>
-@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
-@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+@font-face{font-family:'Outfit';src:url('../assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
 :root{--bg:#08090B;--panel:#0C0E12;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--ok:#4ED08A;--warn:#E9B75C;--bad:#F2685F}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:300 15px/1.6 'Outfit',system-ui,sans-serif;min-height:100%}
 .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
@@ -55,7 +55,7 @@ input:focus,textarea:focus{border-color:var(--blue)}
 .hide{display:none!important}
 @media(max-width:860px){.wrap{grid-template-columns:1fr}.list{max-height:none;border-right:0;border-bottom:1px solid var(--line)}.grid{grid-template-columns:1fr}}
 </style>
-<script src="config.js"></script>
+<script src="../config.js"></script>
 <style id="sift-progress-style">
 #siftProgress{position:fixed;top:0;left:0;right:0;height:3px;z-index:99999;pointer-events:none;opacity:0;transition:opacity .3s ease}
 #siftProgress::before{content:"";position:absolute;inset:0;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#3ddc97,#5aa9ff,#3ddc97);background-size:200% 100%;box-shadow:0 0 12px rgba(61,220,151,.6)}
@@ -70,7 +70,7 @@ input:focus,textarea:focus{border-color:var(--blue)}
 <body>
 <div id="siftProgress" aria-hidden="true"></div>
 <header>
-  <img src="assets/images/sift-logo.png" alt=""><b>SIFT</b><span class="mono" style="color:var(--dim);font-size:.8rem">request desk</span>
+  <img src="../assets/images/sift-logo.png" alt=""><b>SIFT</b><span class="mono" style="color:var(--dim);font-size:.8rem">request desk</span>
   <div class="r"><span class="mono" id="count" style="color:var(--dim);font-size:.8rem"></span><button class="btn hide" id="signout">Sign out</button></div>
 </header>
 

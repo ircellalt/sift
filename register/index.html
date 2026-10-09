@@ -5,10 +5,10 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Create account · SIFT</title>
-<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<link rel="icon" type="image/png" href="../assets/images/sift-logo.png">
 <style>
-@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
-@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+@font-face{font-family:'Outfit';src:url('../assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
 
 :root{--bg:#08090B;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--bad:#F2685F;--ok:#4ED08A}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:300 16px/1.6 'Outfit',system-ui,sans-serif}
@@ -49,7 +49,7 @@ input:focus{border-color:var(--blue)}input.bad{border-color:var(--bad)}
 <body>
 <div id="siftProgress" aria-hidden="true"></div>
 <main class="box">
-  <a class="brand" href="./"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+  <a class="brand" href="../"><img src="../assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
   <div class="panel">
     <h1>Create your account</h1>
     <p class="sub">Free to join. You only pay when a server is running.</p>
@@ -66,13 +66,13 @@ input:focus{border-color:var(--blue)}input.bad{border-color:var(--bad)}
       <button class="btn" type="submit">Create account</button>
     </form>
   </div>
-  <p class="foot">Already have an account? <a href="login">Sign in</a></p>
+  <p class="foot">Already have an account? <a href="../login/">Sign in</a></p>
 </main>
 <script>
 (function(){
   const $=id=>document.getElementById(id);
   const q=new URLSearchParams(location.search);
-  const next=q.get('next')||'dashboard';
+  const next=q.get('next')||'../dashboard/';
   function users(){try{return JSON.parse(localStorage.getItem('sift.v1.users'))||[]}catch(e){return[]}}
   function strength(p){let s=0;if(p.length>=10)s++;if(/[A-Z]/.test(p)&&/[a-z]/.test(p))s++;if(/\d/.test(p))s++;if(/[^A-Za-z0-9]/.test(p))s++;return s;}
   $('pw').addEventListener('input',e=>{const s=strength(e.target.value);const m=$('meter');m.style.width=(s*25)+'%';m.style.background=s<2?'#F2685F':s<4?'#E9B75C':'#4ED08A';});

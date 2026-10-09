@@ -5,10 +5,10 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Request a server · SIFT</title>
-<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<link rel="icon" type="image/png" href="../assets/images/sift-logo.png">
 <style>
-@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
-@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+@font-face{font-family:'Outfit';src:url('../assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
 :root{--bg:#08090B;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--blue2:#8AD1FF;--ok:#4ED08A;--warn:#E9B75C;--bad:#F2685F}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.6 'Outfit',system-ui,sans-serif;min-height:100%}
 body{background:radial-gradient(900px 500px at 85% -10%,rgba(87,184,255,.10),transparent 60%),var(--bg)}
@@ -58,7 +58,7 @@ input.bad,select.bad{border-color:var(--bad)}
 .foot{margin-top:18px;color:var(--dim);font-size:.85rem}
 @media(max-width:600px){.grid{grid-template-columns:1fr}.wrap{padding:30px 16px}}
 </style>
-<script src="config.js"></script>
+<script src="../config.js"></script>
 <style id="sift-progress-style">
 #siftProgress{position:fixed;top:0;left:0;right:0;height:3px;z-index:99999;pointer-events:none;opacity:0;transition:opacity .3s ease}
 #siftProgress::before{content:"";position:absolute;inset:0;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#3ddc97,#5aa9ff,#3ddc97);background-size:200% 100%;box-shadow:0 0 12px rgba(61,220,151,.6)}
@@ -73,8 +73,8 @@ input.bad,select.bad{border-color:var(--bad)}
 <body>
 <div id="siftProgress" aria-hidden="true"></div>
 <nav>
-  <a href="./" style="display:flex;align-items:center;gap:10px"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
-  <a class="back" href="./">← Back to site</a>
+  <a href="../" style="display:flex;align-items:center;gap:10px"><img src="../assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+  <a class="back" href="../">← Back to site</a>
 </nav>
 
 <main class="wrap">
@@ -197,7 +197,7 @@ input.bad,select.bad{border-color:var(--bad)}
     try{
       const r=await fetch(API+'/api/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,verify})});
       const d=await r.json().catch(()=>({}));
-      history.replaceState(null,'','request');
+      history.replaceState(null,'',location.pathname);
       if(!r.ok){ banner('err',d.error||'This confirmation link is not valid.'); showForm(); return; }
       const link=JSON.parse(localStorage.getItem(KEY)||'null');
       if(link&&link.id===id){ banner('ok','Email confirmed. Your request is in the queue.'); startStatus(); }
@@ -234,7 +234,7 @@ input.bad,select.bad{border-color:var(--bad)}
     }
   });
 
-  $('newReq').onclick=()=>{ localStorage.removeItem(KEY); history.replaceState(null,'','request'); showForm(); };
+  $('newReq').onclick=()=>{ localStorage.removeItem(KEY); history.replaceState(null,'',location.pathname); showForm(); };
 
   if(q.get('verify')&&q.get('id')) confirmEmail(q.get('id'), q.get('verify'));
   else if(localStorage.getItem(KEY)) startStatus();

@@ -5,10 +5,10 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Support · SIFT</title>
-<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<link rel="icon" type="image/png" href="../assets/images/sift-logo.png">
 <style>
-@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
-@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+@font-face{font-family:'Outfit';src:url('../assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
 
 :root{--bg:#08090B;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--blue2:#8AD1FF;--copper:#C87A43;--ok:#4ED08A;--warn:#E9B75C;--bad:#F2685F}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.7 'Outfit',system-ui,sans-serif}
@@ -70,13 +70,13 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
 <body>
 <div id="siftProgress" aria-hidden="true"></div>
 <nav>
-  <a class="brand-lock" href="./"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
+  <a class="brand-lock" href="../"><img class="brandmark" src="../assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
   <div class="nav-links">
-    <a href="hosting">Game hosting</a><a href="pricing">Pricing</a><a href="locations">Locations</a><a href="docs">Docs</a><a href="status">Status</a><a href="support" aria-current="page">Support</a>
+    <a href="../hosting/">Game hosting</a><a href="../pricing/">Pricing</a><a href="../locations/">Locations</a><a href="../docs/">Docs</a><a href="../status/">Status</a><a href="../support/" aria-current="page">Support</a>
   </div>
   <div class="nav-right">
-    <a class="btn btn--ghost" href="login" data-auth>Sign in</a>
-    <a class="btn btn--primary" href="pricing">Deploy a server</a>
+    <a class="btn btn--ghost" href="../login/" data-auth>Sign in</a>
+    <a class="btn btn--primary" href="../pricing/">Deploy a server</a>
   </div>
 </nav>
 
@@ -124,7 +124,7 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
   function renderTickets(){
     const list=read('sift.v1.tickets',[]);
     $('tlist').innerHTML=list.length?list.map(t=>`<div class="t"><div><b style="font-weight:500">${t.subject}</b><small class="mono">${t.ref} · ${new Date(t.createdAt).toLocaleDateString('en-GB')} · ${t.category}</small></div><span class="st">Awaiting reply</span></div>`).join('')
-      :`<div class="empty"><b>No tickets yet</b>When you open a ticket it will appear here with its reference and status.${sess?'':' <br><a href="login" style="color:var(--blue)">Sign in</a> to link tickets to your account.'}</div>`;
+      :`<div class="empty"><b>No tickets yet</b>When you open a ticket it will appear here with its reference and status.${sess?'':' <br><a href="../login/" style="color:var(--blue)">Sign in</a> to link tickets to your account.'}</div>`;
   }
   renderTickets();
 
@@ -148,7 +148,7 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
     toast('Ticket <span class="mono">'+ref+'</span> created. An engineer has it, and a reply will reach your email.');
   });
 
-  try{if(sess){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=sess.first||'Account';a.href='dashboard';});}}catch(e){}
+  try{if(sess){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=sess.first||'Account';a.href='../dashboard/';});}}catch(e){}
 })();
 </script>
 <script id="sift-progress-script">

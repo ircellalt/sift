@@ -5,10 +5,10 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Server · SIFT</title>
-<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<link rel="icon" type="image/png" href="../assets/images/sift-logo.png">
 <style>
-@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
-@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+@font-face{font-family:'Outfit';src:url('../assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
 :root{--bg:#08090B;--panel:#0C0E12;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--blue2:#8AD1FF;--copper:#C87A43;--ok:#4ED08A;--warn:#E9B75C;--bad:#F2685F}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:300 15px/1.6 'Outfit',system-ui,sans-serif;min-height:100%}
 a{color:inherit;text-decoration:none}
@@ -103,8 +103,8 @@ textarea{font:400 .8rem/1.6 'JetBrains Mono';min-height:300px;resize:vertical}
 <body>
 <div id="siftProgress" aria-hidden="true"></div>
 <header class="top">
-  <a class="brand" href="./"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
-  <span class="crumb">/ <a href="dashboard" style="color:var(--mute)">Servers</a> / <span id="crumbName">…</span></span>
+  <a class="brand" href="../"><img src="../assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+  <span class="crumb">/ <a href="../dashboard/" style="color:var(--mute)">Servers</a> / <span id="crumbName">…</span></span>
   <div class="right" id="powerBtns">
     <button class="btn btn--ok" id="btnStart">Start</button>
     <button class="btn" id="btnRestart">Restart</button>
@@ -116,12 +116,12 @@ textarea{font:400 .8rem/1.6 'JetBrains Mono';min-height:300px;resize:vertical}
   <div id="gate" class="card gate hide">
     <h2>Sign in to manage this server</h2>
     <p>Server controls are only available to the account that deployed it.</p>
-    <a class="btn btn--ok" href="login">Sign in</a>
+    <a class="btn btn--ok" href="../login/">Sign in</a>
   </div>
   <div id="notFound" class="card gate hide">
     <h2>We couldn’t find that server</h2>
     <p>It may have been removed, or the link is from a different account.</p>
-    <a class="btn" href="dashboard">Back to servers</a>
+    <a class="btn" href="../dashboard/">Back to servers</a>
   </div>
 
   <div id="main" class="hide">
@@ -466,7 +466,7 @@ enable-query=false`,
     confirmBox('Delete '+order.name+'?','This removes the world, backups and files permanently.','Delete server',()=>{
       const all=read('sift.v1.orders',[]).filter(o=>o.id!==id);write('sift.v1.orders',all);
       ['file','backups','whitelist','schedules'].forEach(k=>{Object.keys(localStorage).filter(x=>x.startsWith('sift.v1.'+k)&&x.endsWith(id)||x.startsWith('sift.v1.'+k+'.'+id)).forEach(x=>localStorage.removeItem(x));});
-      toast('Server deleted.');setTimeout(()=>location.href='dashboard',700);
+      toast('Server deleted.');setTimeout(()=>location.href='../dashboard/',700);
     });
   };
 

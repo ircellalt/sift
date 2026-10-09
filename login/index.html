@@ -5,10 +5,10 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sign in · SIFT</title>
-<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<link rel="icon" type="image/png" href="../assets/images/sift-logo.png">
 <style>
-@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
-@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+@font-face{font-family:'Outfit';src:url('../assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
 
 :root{--bg:#08090B;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--bad:#F2685F;--warn:#E9B75C}
 *{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:300 16px/1.6 'Outfit',system-ui,sans-serif}
@@ -49,7 +49,7 @@ input.bad{border-color:var(--bad)}
 <body>
 <div id="siftProgress" aria-hidden="true"></div>
 <main class="box">
-  <a class="brand" href="./"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+  <a class="brand" href="../"><img src="../assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
   <div class="panel">
     <h1>Sign in to your panel</h1>
     <p class="sub">Manage your servers, billing and tickets.</p>
@@ -61,13 +61,13 @@ input.bad{border-color:var(--bad)}
     </form>
     <div class="row"><span>Two-factor is enforced on billing changes.</span></div>
   </div>
-  <p class="foot">New to SIFT? <a href="register">Create an account</a></p>
+  <p class="foot">New to SIFT? <a href="../register/">Create an account</a></p>
 </main>
 <script>
 (function(){
   const $=id=>document.getElementById(id);
   const LOCK_KEY='sift.v1.lock', FAIL_KEY='sift.v1.fails';
-  const next=new URLSearchParams(location.search).get('next')||'dashboard';
+  const next=new URLSearchParams(location.search).get('next')||'../dashboard/';
   let lockTimer=null;
   function users(){try{return JSON.parse(localStorage.getItem('sift.v1.users'))||[]}catch(e){return[]}}
 

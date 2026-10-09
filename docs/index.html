@@ -5,10 +5,10 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Docs · SIFT</title>
-<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<link rel="icon" type="image/png" href="../assets/images/sift-logo.png">
 <style>
-@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
-@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+@font-face{font-family:'Outfit';src:url('../assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
 
 :root{--bg:#08090B;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--blue2:#8AD1FF;--copper:#C87A43;--ok:#4ED08A}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.7 'Outfit',system-ui,sans-serif}
@@ -63,13 +63,13 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
 <body>
 <div id="siftProgress" aria-hidden="true"></div>
 <nav>
-  <a class="brand-lock" href="./"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
+  <a class="brand-lock" href="../"><img class="brandmark" src="../assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
   <div class="nav-links">
-    <a href="hosting">Game hosting</a><a href="pricing">Pricing</a><a href="locations">Locations</a><a href="docs" aria-current="page">Docs</a><a href="status">Status</a><a href="support">Support</a>
+    <a href="../hosting/">Game hosting</a><a href="../pricing/">Pricing</a><a href="../locations/">Locations</a><a href="../docs/" aria-current="page">Docs</a><a href="../status/">Status</a><a href="../support/">Support</a>
   </div>
   <div class="nav-right">
-    <a class="btn btn--ghost" href="login" data-auth>Sign in</a>
-    <a class="btn btn--primary" href="pricing">Deploy a server</a>
+    <a class="btn btn--ghost" href="../login/" data-auth>Sign in</a>
+    <a class="btn btn--primary" href="../pricing/">Deploy a server</a>
   </div>
 </nav>
 
@@ -95,7 +95,7 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
     <p>Everything you need to get a Minecraft server online, keep it healthy and understand what you're paying for. Written by the engineers who run the fleet.</p>
 
     <h2 id="first">Deploy your first server</h2>
-    <p>Choose a plan on the <a href="pricing" style="color:var(--blue)">pricing page</a>, pick a region and a name. Your server gets an address of <code>name.sift.gg</code> straight away. Provisioning takes about 47 seconds on average and runs through twelve logged steps.</p>
+    <p>Choose a plan on the <a href="../pricing/" style="color:var(--blue)">pricing page</a>, pick a region and a name. Your server gets an address of <code>name.sift.gg</code> straight away. Provisioning takes about 47 seconds on average and runs through twelve logged steps.</p>
     <pre>/whitelist add YourName
 /op YourName
 /gamemode survival</pre>
@@ -122,7 +122,7 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
     <h2 id="2fa">Two-factor authentication</h2>
     <p>Two-factor is required before you change billing details or remove a server. Set it up from your account settings once you have signed in.</p>
 
-    <p class="none" id="none">No articles match that search. Try another word, or <a href="support" style="color:var(--blue)">open a support ticket</a>.</p>
+    <p class="none" id="none">No articles match that search. Try another word, or <a href="../support/" style="color:var(--blue)">open a support ticket</a>.</p>
   </main>
 </div>
 
@@ -144,7 +144,7 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
     });
     document.getElementById('none').style.display=shown?'none':'block';
   });
-  try{const s=JSON.parse(localStorage.getItem('sift.v1.session'));if(s){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=s.first||'Account';a.href='dashboard';});}}catch(e){}
+  try{const s=JSON.parse(localStorage.getItem('sift.v1.session'));if(s){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=s.first||'Account';a.href='../dashboard/';});}}catch(e){}
 })();
 </script>
 <script id="sift-progress-script">

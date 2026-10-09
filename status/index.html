@@ -5,10 +5,10 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Status · SIFT</title>
-<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<link rel="icon" type="image/png" href="../assets/images/sift-logo.png">
 <style>
-@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
-@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+@font-face{font-family:'Outfit';src:url('../assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
 
 :root{--bg:#08090B;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--blue2:#8AD1FF;--copper:#C87A43;--ok:#4ED08A;--warn:#E9B75C;--bad:#F2685F}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.7 'Outfit',system-ui,sans-serif}
@@ -66,13 +66,13 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
 <body>
 <div id="siftProgress" aria-hidden="true"></div>
 <nav>
-  <a class="brand-lock" href="./"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
+  <a class="brand-lock" href="../"><img class="brandmark" src="../assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
   <div class="nav-links">
-    <a href="hosting">Game hosting</a><a href="pricing">Pricing</a><a href="locations">Locations</a><a href="docs">Docs</a><a href="status" aria-current="page">Status</a><a href="support">Support</a>
+    <a href="../hosting/">Game hosting</a><a href="../pricing/">Pricing</a><a href="../locations/">Locations</a><a href="../docs/">Docs</a><a href="../status/" aria-current="page">Status</a><a href="../support/">Support</a>
   </div>
   <div class="nav-right">
-    <a class="btn btn--ghost" href="login" data-auth>Sign in</a>
-    <a class="btn btn--primary" href="pricing">Deploy a server</a>
+    <a class="btn btn--ghost" href="../login/" data-auth>Sign in</a>
+    <a class="btn btn--primary" href="../pricing/">Deploy a server</a>
   </div>
 </nav>
 
@@ -128,7 +128,7 @@ footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-
     m.style.color='#4ED08A';m.textContent='Subscribed. Confirmation sent to '+v+'.';
     document.getElementById('em').value='';
   });
-  try{const s=JSON.parse(localStorage.getItem('sift.v1.session'));if(s){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=s.first||'Account';a.href='dashboard';});}}catch(e){}
+  try{const s=JSON.parse(localStorage.getItem('sift.v1.session'));if(s){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=s.first||'Account';a.href='../dashboard/';});}}catch(e){}
 })();
 </script>
 <script id="sift-progress-script">
