@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Support · SIFT</title>
+<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<style>
+@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+
+:root{--bg:#08090B;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--blue2:#8AD1FF;--copper:#C87A43;--ok:#4ED08A;--warn:#E9B75C;--bad:#F2685F}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.7 'Outfit',system-ui,sans-serif}
+body{background:radial-gradient(900px 500px at 85% -10%,rgba(87,184,255,.10),transparent 60%),var(--bg);min-height:100vh}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:28px;padding:14px 32px;border-bottom:1px solid var(--line);background:rgba(8,9,11,.82);backdrop-filter:blur(10px)}
+.nav-links{display:flex;gap:22px;font-size:.92rem;color:var(--mute)}.nav-links a:hover,.nav-links a[aria-current]{color:#fff}
+.nav-right{margin-left:auto;display:flex;gap:14px;align-items:center}
+.brand-lock{display:inline-flex;align-items:center;gap:.5rem}
+.brandmark{width:36px;height:36px;object-fit:contain;filter:drop-shadow(0 4px 14px rgba(87,184,255,.28))}
+.brandword{font-weight:600;font-size:1.05rem;letter-spacing:.14em}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--ink);font:500 .9rem 'Outfit';cursor:pointer}
+.btn--primary{background:linear-gradient(180deg,#1F4F7D,#163B5E);border-color:rgba(87,184,255,.45)}
+.btn--ghost{border-color:transparent;background:none;color:var(--mute)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+.kicker{font:500 .72rem 'JetBrains Mono';letter-spacing:.14em;text-transform:uppercase;color:var(--blue);display:flex;gap:10px;align-items:center}
+.kicker::before{content:"";width:28px;height:1px;background:var(--blue)}
+h1{font-weight:500;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em;margin:14px 0 10px}
+h2{font-weight:500;font-size:1.2rem;margin:0 0 14px}
+.lead{color:var(--mute);max-width:600px}
+.layout{display:grid;grid-template-columns:1fr 1.1fr;gap:26px;margin-top:40px;align-items:start}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border:1px solid var(--line);border-radius:14px;padding:24px}
+.channel{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.channel:last-child{border:0}
+.channel b{font-weight:500;display:block}
+.channel span{color:var(--mute);font-size:.9rem}
+.channel .mono{color:var(--blue2);font-size:.82rem;margin-top:3px;display:block}
+.field{display:grid;gap:7px;margin-bottom:14px}
+.field label{font-size:.84rem;color:var(--mute)}
+input,select,textarea{width:100%;background:#0B0D11;border:1px solid var(--line2);border-radius:9px;padding:11px 13px;color:var(--ink);font:400 .94rem 'Outfit';outline:none}
+textarea{min-height:120px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--blue)}
+input.bad,textarea.bad{border-color:var(--bad)}
+.err{color:var(--bad);font-size:.82rem;min-height:1.1em}
+.hint{color:var(--dim);font-size:.82rem}
+.tickets{margin-top:26px}
+.empty{text-align:center;padding:40px 16px;border:1px dashed var(--line2);border-radius:12px;color:var(--mute);font-size:.92rem}
+.empty b{display:block;color:var(--ink);font-weight:500;margin-bottom:4px}
+.t{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.t small{color:var(--dim);display:block;font-size:.8rem}
+.st{font:500 .66rem 'JetBrains Mono';letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:999px;border:1px solid var(--line2);color:var(--warn);height:fit-content}
+.toast{position:fixed;bottom:22px;right:22px;background:#12161C;border:1px solid var(--line2);border-radius:10px;padding:13px 16px;font-size:.88rem;transform:translateY(160%);transition:.35s;z-index:9;max-width:360px}
+.toast.show{transform:none}
+footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-size:.9rem;text-align:center;margin-top:60px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.nav-links{display:none}nav{padding:12px 18px}.wrap{padding:0 18px}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand-lock" href="index.html"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
+  <div class="nav-links">
+    <a href="hosting.html">Game hosting</a><a href="pricing.html">Pricing</a><a href="locations.html">Locations</a><a href="docs.html">Docs</a><a href="status.html">Status</a><a href="support.html" aria-current="page">Support</a>
+  </div>
+  <div class="nav-right">
+    <a class="btn btn--ghost" href="login.html" data-auth>Sign in</a>
+    <a class="btn btn--primary" href="pricing.html">Deploy a server</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="kicker" style="margin-top:50px">Support</div>
+  <h1>Talk to an engineer.</h1>
+  <p class="lead">Our engineers work in shifts across London and Singapore. Median first reply is 11 minutes. Tickets are answered by people who run the same servers you do.</p>
+
+  <div class="layout">
+    <div class="card">
+      <div class="channel"><div><b>Support ticket</b><span>Best for anything that needs a trace: migrations, billing, corrupted worlds.</span><span class="mono">Median reply 11 min</span></div></div>
+      <div class="channel"><div><b>Live chat</b><span>Available to signed-in customers during shift hours.</span><span class="mono">Mon–Sun · 06:00–23:00 UK</span></div></div>
+      <div class="channel"><div><b>Abuse &amp; security</b><span>Report a compromised account or a player who is abusing a server.</span><span class="mono">abuse@sift.gg</span></div></div>
+    </div>
+
+    <div class="card">
+      <h2>Open a ticket</h2>
+      <form id="tform" novalidate>
+        <div class="field"><label for="subj">Subject</label><input id="subj" maxlength="90" placeholder="e.g. Server stops after 20 minutes"><div class="err" id="sErr"></div></div>
+        <div class="field"><label for="cat">Category</label>
+          <select id="cat"><option value="">Choose one</option><option>Server won't start</option><option>Performance or lag</option><option>Billing</option><option>Migration or region change</option><option>Account or login</option><option>Something else</option></select>
+          <div class="err" id="cErr"></div></div>
+        <div class="field"><label for="body">Describe the problem</label><textarea id="body" placeholder="What happened, when it started, and anything you've already tried."></textarea><div class="hint" id="bCount">0 / 1200</div><div class="err" id="bErr"></div></div>
+        <button class="btn btn--primary" type="submit">Submit ticket</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="tickets card" style="margin-top:26px">
+    <h2>Your tickets</h2>
+    <div id="tlist"></div>
+  </div>
+</main>
+
+<footer>© 2026 SIFT Hosting Ltd · Erith, United Kingdom</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  function read(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}}
+  const sess=read('sift.v1.session',null);
+  function toast(m){const t=$('toast');t.innerHTML=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3600);}
+
+  function renderTickets(){
+    const list=read('sift.v1.tickets',[]);
+    $('tlist').innerHTML=list.length?list.map(t=>`<div class="t"><div><b style="font-weight:500">${t.subject}</b><small class="mono">${t.ref} · ${new Date(t.createdAt).toLocaleDateString('en-GB')} · ${t.category}</small></div><span class="st">Awaiting reply</span></div>`).join('')
+      :`<div class="empty"><b>No tickets yet</b>When you open a ticket it will appear here with its reference and status.${sess?'':' <br><a href="login.html" style="color:var(--blue)">Sign in</a> to link tickets to your account.'}</div>`;
+  }
+  renderTickets();
+
+  $('body').addEventListener('input',e=>{$('bCount').textContent=e.target.value.length+' / 1200';});
+
+  $('tform').addEventListener('submit',e=>{
+    e.preventDefault();
+    const subj=$('subj').value.trim(), cat=$('cat').value, body=$('body').value.trim();
+    $('sErr').textContent=subj.length<5?'Give the ticket a short subject, at least 5 characters.':'';
+    $('cErr').textContent=cat?'':'Choose the closest category.';
+    $('bErr').textContent=body.length<20?'Add a little more detail, at least 20 characters.':body.length>1200?'Keep it under 1200 characters.':'';
+    $('subj').classList.toggle('bad',!!$('sErr').textContent);
+    $('body').classList.toggle('bad',!!$('bErr').textContent);
+    if($('sErr').textContent||$('cErr').textContent||$('bErr').textContent) return;
+    const list=read('sift.v1.tickets',[]);
+    const ref='SFT-'+(8000+list.length*37+Math.floor(Math.random()*30));
+    list.unshift({ref,subject:subj,category:cat,body,status:'open',createdAt:Date.now(),account:sess?sess.accountId:null});
+    localStorage.setItem('sift.v1.tickets',JSON.stringify(list));
+    $('tform').reset();$('bCount').textContent='0 / 1200';
+    renderTickets();
+    toast('Ticket <span class="mono">'+ref+'</span> created. An engineer has it, and a reply will reach your email.');
+  });
+
+  try{if(sess){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=sess.first||'Account';a.href='dashboard.html';});}}catch(e){}
+})();
+</script>
+</body>
+</html>

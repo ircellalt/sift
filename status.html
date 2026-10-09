@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Status · SIFT</title>
+<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<style>
+@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+
+:root{--bg:#08090B;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--blue2:#8AD1FF;--copper:#C87A43;--ok:#4ED08A;--warn:#E9B75C;--bad:#F2685F}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.7 'Outfit',system-ui,sans-serif}
+body{background:radial-gradient(900px 500px at 85% -10%,rgba(87,184,255,.10),transparent 60%),var(--bg);min-height:100vh}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:28px;padding:14px 32px;border-bottom:1px solid var(--line);background:rgba(8,9,11,.82);backdrop-filter:blur(10px)}
+.nav-links{display:flex;gap:22px;font-size:.92rem;color:var(--mute)}.nav-links a:hover,.nav-links a[aria-current]{color:#fff}
+.nav-right{margin-left:auto;display:flex;gap:14px;align-items:center}
+.brand-lock{display:inline-flex;align-items:center;gap:.5rem}
+.brandmark{width:36px;height:36px;object-fit:contain;filter:drop-shadow(0 4px 14px rgba(87,184,255,.28))}
+.brandword{font-weight:600;font-size:1.05rem;letter-spacing:.14em}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--ink);font:500 .9rem 'Outfit'}
+.btn--primary{background:linear-gradient(180deg,#1F4F7D,#163B5E);border-color:rgba(87,184,255,.45)}
+.btn--ghost{border-color:transparent;background:none;color:var(--mute)}
+.wrap{max-width:1000px;margin:0 auto;padding:0 32px}
+.kicker{font:500 .72rem 'JetBrains Mono';letter-spacing:.14em;text-transform:uppercase;color:var(--blue);display:flex;gap:10px;align-items:center}
+.kicker::before{content:"";width:28px;height:1px;background:var(--blue)}
+h1{font-weight:500;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em;margin:14px 0 10px}
+.banner{margin:30px 0 10px;display:flex;align-items:center;gap:14px;padding:20px 22px;border:1px solid rgba(78,208,138,.3);border-radius:14px;background:rgba(78,208,138,.05)}
+.banner i{width:12px;height:12px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 5px rgba(78,208,138,.16)}
+.banner b{font-weight:500;font-size:1.05rem}
+.banner span{margin-left:auto;color:var(--mute);font:400 .8rem 'JetBrains Mono'}
+.comp{margin-top:26px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.c{display:grid;grid-template-columns:1fr auto;gap:14px;padding:18px 22px;border-bottom:1px solid var(--line);align-items:center}
+.c:last-child{border:0}
+.c b{font-weight:500}.c small{display:block;color:var(--dim);font-size:.84rem}
+.up{font:500 .72rem 'JetBrains Mono';letter-spacing:.08em;text-transform:uppercase;color:var(--ok)}
+.bars{display:flex;gap:2px;margin-top:8px}
+.bars i{width:6px;height:18px;border-radius:2px;background:rgba(78,208,138,.7)}
+.bars i.w{background:rgba(233,183,92,.8)}
+.bars i.r{background:rgba(242,104,95,.8)}
+.sec{margin-top:50px}
+.sec h2{font-weight:500;font-size:1.2rem;margin:0 0 12px}
+.incident{border:1px dashed var(--line2);border-radius:14px;padding:34px 24px;text-align:center;color:var(--mute)}
+.incident b{display:block;color:var(--ink);font-weight:500;margin-bottom:4px}
+.sub{display:flex;gap:10px;margin-top:14px;max-width:480px}
+.sub input{flex:1;background:#0B0D11;border:1px solid var(--line2);border-radius:999px;padding:11px 16px;color:var(--ink);font:400 .92rem 'Outfit';outline:none}
+.sub input:focus{border-color:var(--blue)}
+.msg{font-size:.86rem;color:var(--ok);margin-top:8px;min-height:1.2em}
+footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-size:.9rem;text-align:center;margin-top:60px}
+@media(max-width:900px){.nav-links{display:none}nav{padding:12px 18px}.wrap{padding:0 18px}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand-lock" href="index.html"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
+  <div class="nav-links">
+    <a href="hosting.html">Game hosting</a><a href="pricing.html">Pricing</a><a href="locations.html">Locations</a><a href="docs.html">Docs</a><a href="status.html" aria-current="page">Status</a><a href="support.html">Support</a>
+  </div>
+  <div class="nav-right">
+    <a class="btn btn--ghost" href="login.html" data-auth>Sign in</a>
+    <a class="btn btn--primary" href="pricing.html">Deploy a server</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="kicker" style="margin-top:50px">System status</div>
+  <h1>All systems operational</h1>
+  <p style="color:var(--mute);max-width:560px">Live state of every region, the control panel and the DDoS filter. Last checked <span id="checked" class="mono" style="color:var(--ink)">—</span>.</p>
+
+  <div class="banner"><i></i><b>Every component is running normally</b><span id="uptime">99.99% · 90 days</span></div>
+
+  <div class="comp" id="comp"></div>
+
+  <div class="sec">
+    <h2>Incidents</h2>
+    <div class="incident"><b>No incidents reported in the last 90 days</b>When something affects players, it will appear here within five minutes, with updates until it is resolved.</div>
+  </div>
+
+  <div class="sec">
+    <h2>Get updates</h2>
+    <p style="color:var(--mute);margin:0">Email me when a region or the control panel has an incident.</p>
+    <form class="sub" id="subForm" novalidate>
+      <input id="em" type="email" placeholder="you@example.com" aria-label="Email address">
+      <button class="btn btn--primary" type="submit">Subscribe</button>
+    </form>
+    <div class="msg" id="subMsg"></div>
+  </div>
+</main>
+
+<footer>© 2026 SIFT Hosting Ltd · Erith, United Kingdom</footer>
+
+<script>
+(function(){
+  const comps=[
+    {n:'Control panel',d:'Login, console and server controls'},
+    {n:'Game network · London & Amsterdam',d:'lon-r4, ams-r9'},
+    {n:'Game network · Frankfurt & Paris',d:'fra-r9, par-r2'},
+    {n:'Game network · New York & Dallas',d:'nyc-r1, dal-r1'},
+    {n:'Game network · Singapore & Sydney',d:'sin-r3, syd-r1'},
+    {n:'DDoS filtering',d:'Edge scrubbing, all regions'},
+    {n:'Billing & invoices',d:'Payments and invoice delivery'}
+  ];
+  const bars=()=>Array.from({length:60},(_,i)=>{const r=Math.random();return '<i class="'+(i===41&&Math.random()<.3?'w':'')+'"></i>';}).join('');
+  document.getElementById('comp').innerHTML=comps.map(c=>`
+    <div class="c"><div><b>${c.n}</b><small>${c.d}</small><div class="bars">${bars()}</div></div><span class="up">Operational</span></div>`).join('');
+  const now=new Date();
+  document.getElementById('checked').textContent=now.toISOString().slice(11,16)+' UTC';
+
+  document.getElementById('subForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const v=document.getElementById('em').value.trim();
+    const m=document.getElementById('subMsg');
+    if(!/^\S+@\S+\.\S+$/.test(v)){m.style.color='#F2685F';m.textContent='Enter a valid email address to subscribe.';return;}
+    m.style.color='#4ED08A';m.textContent='Subscribed. Confirmation sent to '+v+'.';
+    document.getElementById('em').value='';
+  });
+  try{const s=JSON.parse(localStorage.getItem('sift.v1.session'));if(s){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=s.first||'Account';a.href='dashboard.html';});}}catch(e){}
+})();
+</script>
+</body>
+</html>

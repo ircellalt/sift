@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Account · SIFT</title>
+<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<style>
+@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--bg:#08090B;--panel:#0C0E12;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--blue2:#8AD1FF;--ok:#4ED08A;--warn:#E9B75C;--bad:#F2685F}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:300 15px/1.6 'Outfit',system-ui,sans-serif;min-height:100%}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.app{display:grid;grid-template-columns:232px 1fr;min-height:100vh}
+aside{border-right:1px solid var(--line);padding:22px 16px;background:var(--panel);display:flex;flex-direction:column;gap:6px}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 22px}.brand img{width:34px;height:34px;object-fit:contain}.brand b{font-weight:600;letter-spacing:.14em}
+.nav a{display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:8px;color:var(--mute);font-size:.92rem}
+.nav a:hover{background:rgba(255,255,255,.04);color:#fff}
+.nav a.on{background:rgba(87,184,255,.1);color:#fff}
+.sep{height:1px;background:var(--line);margin:12px 4px}
+.me{margin-top:auto;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:.86rem;color:var(--mute)}
+.me b{display:block;color:var(--ink);font-weight:500}
+main{padding:28px 36px 60px;min-width:0}
+h1{font-weight:500;font-size:1.7rem;letter-spacing:-.02em;margin:0 0 4px}
+.sub{color:var(--mute);font-size:.92rem;margin-bottom:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--ink);font:500 .88rem 'Outfit';cursor:pointer}
+.btn:hover{border-color:rgba(255,255,255,.3)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn--primary{background:linear-gradient(180deg,#1F4F7D,#163B5E);border-color:rgba(87,184,255,.45)}
+.btn--bad{color:var(--bad);border-color:rgba(242,104,95,.35)}
+.btn--sm{padding:7px 13px;font-size:.82rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border:1px solid var(--line);border-radius:14px;padding:22px}
+.card h2{font-weight:500;font-size:1.02rem;margin:0 0 6px}
+.card > p.sub{margin-bottom:16px;font-size:.88rem}
+.label{font:500 .66rem 'JetBrains Mono';letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.field{display:grid;gap:7px;margin-bottom:14px}
+.field label{font-size:.84rem;color:var(--mute)}
+input{width:100%;background:#0B0D11;border:1px solid var(--line2);border-radius:9px;padding:11px 13px;color:var(--ink);font:400 .94rem 'Outfit';outline:none}
+input:focus{border-color:var(--blue)}
+input.bad{border-color:var(--bad)}
+.err{color:var(--bad);font-size:.82rem;min-height:1.1em;margin:-8px 0 8px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.92rem;color:var(--mute)}
+.row:last-child{border:0}
+.row b{font:400 .85rem 'JetBrains Mono';color:var(--ink);font-weight:400}
+.toggle{position:relative;width:42px;height:24px;border-radius:999px;background:rgba(255,255,255,.1);border:0;cursor:pointer;flex:none}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.toggle.on{background:rgba(78,208,138,.5)}.toggle.on::after{left:21px}
+.codebox{display:flex;gap:8px;justify-content:space-between;margin:14px 0}
+.codebox input{text-align:center;font:400 1.1rem 'JetBrains Mono';letter-spacing:.2em}
+.modal{position:fixed;inset:0;background:rgba(4,5,7,.7);display:none;place-items:center;z-index:30;padding:18px}
+.modal.open{display:grid}
+.modal .card{width:100%;max-width:420px;background:#0E1116}
+.toast{position:fixed;bottom:22px;right:22px;background:#12161C;border:1px solid var(--line2);border-radius:10px;padding:13px 16px;font-size:.88rem;transform:translateY(160%);transition:.35s;z-index:40;max-width:340px}
+.toast.show{transform:none}
+.hide{display:none!important}
+.gate{text-align:center;padding:70px 20px}
+.gate p{color:var(--mute)}
+@media(max-width:900px){.app{grid-template-columns:1fr}aside{display:none}main{padding:20px 18px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <a class="brand" href="index.html"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+    <nav class="nav">
+      <a href="dashboard.html">Servers</a>
+      <a href="pricing.html">Deploy new server</a>
+      <a href="billing.html">Billing</a>
+      <a class="on" href="account.html">Account</a>
+      <div class="sep"></div>
+      <a href="support.html">Support</a>
+      <a href="docs.html">Docs</a>
+      <a href="status.html">Status</a>
+    </nav>
+    <div class="me" id="me"></div>
+  </aside>
+
+  <main>
+    <h1>Account</h1>
+    <div class="sub">Your details, security and sessions.</div>
+
+    <div id="gate" class="card gate hide">
+      <h2 style="font-weight:500;margin-top:0">Sign in to manage your account</h2>
+      <p>Account settings are only available once you have signed in.</p>
+      <a class="btn btn--primary" href="login.html?next=account.html">Sign in</a>
+    </div>
+
+    <div id="panel" class="hide">
+      <div class="grid">
+        <div class="card">
+          <h2>Profile</h2>
+          <p class="sub">The name shown on invoices and support tickets.</p>
+          <form id="pForm" novalidate>
+            <div class="field"><label for="pName">Full name</label><input id="pName" maxlength="60"><div class="err" id="pNameErr"></div></div>
+            <div class="field"><label for="pEmail">Email address</label><input id="pEmail" disabled><div class="label" style="text-transform:none;letter-spacing:0;font-size:.78rem">Contact support to change the email on your account.</div></div>
+            <button class="btn btn--primary" type="submit">Save profile</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Password</h2>
+          <p class="sub">At least 10 characters. Use a password you don’t use anywhere else.</p>
+          <form id="pwForm" novalidate>
+            <div class="field"><label for="pwOld">Current password</label><input id="pwOld" type="password" autocomplete="current-password"><div class="err" id="pwOldErr"></div></div>
+            <div class="field"><label for="pwNew">New password</label><input id="pwNew" type="password" autocomplete="new-password"><div class="err" id="pwNewErr"></div></div>
+            <button class="btn" type="submit">Change password</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Two-factor authentication</h2>
+          <p class="sub">Required before you change billing details or delete a server.</p>
+          <div class="row"><span>Status</span><b id="tfState">Not enabled</b></div>
+          <div class="row"><span>Method</span><button class="toggle" id="tfToggle" aria-label="Toggle two-factor"></button></div>
+          <div id="tfSetup" class="hide" style="margin-top:14px">
+            <p style="color:var(--mute);font-size:.9rem;margin:0">Open your authenticator app and enter the 6-digit code it shows for SIFT.</p>
+            <div class="codebox"><input id="tfCode" maxlength="6" inputmode="numeric" aria-label="Authenticator code"></div>
+            <div class="err" id="tfErr"></div>
+            <button class="btn btn--primary btn--sm" id="tfConfirm">Enable two-factor</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Sessions</h2>
+          <p class="sub">Devices currently signed in to your account.</p>
+          <div class="row"><span><b style="font-family:Outfit;font-weight:500;color:var(--ink)">This browser</b><br><small style="color:var(--dim)" id="sessMeta">—</small></span><span class="label" style="color:var(--ok)">Current</span></div>
+          <div style="margin-top:14px"><button class="btn btn--sm" id="signOutAll">Sign out this device</button></div>
+        </div>
+
+        <div class="card" style="grid-column:1/-1;border-color:rgba(242,104,95,.25)">
+          <h2 style="color:var(--bad)">Close account</h2>
+          <p class="sub">Closing your account deletes every server, backup and invoice history on it. Servers must be deleted first. This cannot be undone.</p>
+          <div class="field" style="max-width:420px"><label for="cEmail">Type your email address to confirm</label><input id="cEmail" autocomplete="off"><div class="err" id="cErr"></div></div>
+          <button class="btn btn--bad" id="cBtn">Close account</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  function read(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}}
+  function write(k,v){localStorage.setItem(k,JSON.stringify(v))}
+  function toast(m){const t=$('toast');t.innerHTML=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3200);}
+  function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  const sess=read('sift.v1.session',null);
+
+  if(!sess){$('gate').classList.remove('hide');$('me').innerHTML='<b>Guest</b><a href="login.html" style="color:var(--blue)">Sign in →</a>';return;}
+  $('panel').classList.remove('hide');
+  $('me').innerHTML='<b>'+esc(sess.first||'Account')+'</b><span class="mono" style="font-size:.75rem">'+esc(sess.accountId||'')+'</span>';
+
+  function user(){return read('sift.v1.users',[]).find(u=>u.email===sess.email)||null;}
+  let u=user();
+
+  /* profile */
+  $('pName').value=sess.first||'';$('pEmail').value=sess.email||'';
+  $('pForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const n=$('pName').value.trim();
+    $('pNameErr').textContent=n.length<2?'Enter your full name.':/[0-9<>@]/.test(n)?'Names can’t contain numbers or symbols.':'';
+    $('pName').classList.toggle('bad',!!$('pNameErr').textContent);
+    if($('pNameErr').textContent)return;
+    const all=read('sift.v1.users',[]);const i=all.findIndex(x=>x.email===sess.email);if(i>-1){all[i].first=n;write('sift.v1.users',all);}
+    sess.first=n;write('sift.v1.session',sess);
+    toast('Profile saved.');setTimeout(()=>location.reload(),500);
+  });
+
+  /* password */
+  $('pwForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const oldP=$('pwOld').value, newP=$('pwNew').value;
+    const enc=s=>btoa(unescape(encodeURIComponent(s)));
+    $('pwOldErr').textContent=!oldP?'Enter your current password.':(u&&u.pw!==enc(oldP))?'That isn’t your current password.':'';
+    $('pwNewErr').textContent=newP.length<10?'Use at least 10 characters.':newP===oldP?'Choose a password you haven’t used just now.':'';
+    $('pwOld').classList.toggle('bad',!!$('pwOldErr').textContent);$('pwNew').classList.toggle('bad',!!$('pwNewErr').textContent);
+    if($('pwOldErr').textContent||$('pwNewErr').textContent)return;
+    const all=read('sift.v1.users',[]);const i=all.findIndex(x=>x.email===sess.email);if(i>-1){all[i].pw=enc(newP);write('sift.v1.users',all);}
+    $('pwOld').value='';$('pwNew').value='';toast('Password changed. Other devices stay signed in until they sign out.');
+  });
+
+  /* two-factor */
+  let tf=!!read('sift.v1.tfa.'+sess.email,false);
+  function renderTf(){$('tfState').textContent=tf?'Enabled':'Not enabled';$('tfState').style.color=tf?'var(--ok)':'';$('tfToggle').classList.toggle('on',tf);}
+  renderTf();
+  $('tfToggle').onclick=()=>{
+    if(tf){ if(confirm('Turn off two-factor? Billing changes and server deletion will be less protected.')){write('sift.v1.tfa.'+sess.email,false);tf=false;renderTf();toast('Two-factor turned off.');} return; }
+    $('tfSetup').classList.toggle('hide');
+  };
+  $('tfConfirm').onclick=()=>{
+    const c=$('tfCode').value.trim();
+    if(!/^\d{6}$/.test(c)){$('tfErr').textContent='Enter the 6-digit code from your app.';return;}
+    $('tfErr').textContent='';write('sift.v1.tfa.'+sess.email,true);tf=true;renderTf();$('tfSetup').classList.add('hide');$('tfCode').value='';toast('Two-factor enabled.');
+  };
+
+  /* sessions */
+  $('sessMeta').textContent='Signed in '+new Date(sess.createdAt||Date.now()).toLocaleDateString('en-GB')+' · '+(navigator.platform||'Browser');
+  $('signOutAll').onclick=()=>{localStorage.removeItem('sift.v1.session');toast('Signed out on this device.');setTimeout(()=>location.href='index.html',700);};
+
+  /* close account */
+  $('cBtn').onclick=()=>{
+    if($('cEmail').value.trim().toLowerCase()!==sess.email){$('cErr').textContent='That doesn’t match the email on this account.';return;}
+    const orders=read('sift.v1.orders',[]);
+    if(orders.length){$('cErr').textContent='Delete your '+orders.length+' server'+(orders.length>1?'s':'')+' before closing the account.';return;}
+    if(!confirm('Close this account permanently?'))return;
+    const all=read('sift.v1.users',[]).filter(x=>x.email!==sess.email);write('sift.v1.users',all);
+    localStorage.removeItem('sift.v1.session');localStorage.removeItem('sift.v1.payment');
+    toast('Account closed. Thank you for trying SIFT.');setTimeout(()=>location.href='index.html',900);
+  };
+})();
+</script>
+</body>
+</html>

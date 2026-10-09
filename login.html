@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in · SIFT</title>
+<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<style>
+@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+
+:root{--bg:#08090B;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--bad:#F2685F;--warn:#E9B75C}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:300 16px/1.6 'Outfit',system-ui,sans-serif}
+body{background:radial-gradient(700px 420px at 50% 0%,rgba(87,184,255,.10),transparent 70%),var(--bg);display:grid;place-items:center;padding:24px}
+a{color:var(--blue);text-decoration:none}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.box{width:100%;max-width:420px}
+.brand{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:28px;color:inherit;text-decoration:none}
+.brand img{width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 8px 24px rgba(87,184,255,.3))}
+.brand b{font-weight:600;letter-spacing:.16em;font-size:1rem}
+.panel{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid var(--line);border-radius:16px;padding:32px}
+h1{font-weight:500;font-size:1.6rem;letter-spacing:-.02em;margin:0 0 6px}
+.sub{color:var(--mute);font-size:.94rem;margin:0 0 26px}
+.field{display:grid;gap:8px;margin-bottom:16px}
+.field label{font-size:.84rem;color:var(--mute);display:flex;justify-content:space-between}
+input{width:100%;background:#0B0D11;border:1px solid var(--line2);border-radius:9px;padding:12px 14px;color:var(--ink);font:400 .95rem 'Outfit';outline:none}
+input:focus{border-color:var(--blue)}
+input.bad{border-color:var(--bad)}
+.err{color:var(--bad);font-size:.82rem;min-height:1.1em;margin-top:-6px}
+.btn{width:100%;padding:13px;border-radius:999px;border:1px solid rgba(87,184,255,.45);background:linear-gradient(180deg,#1F4F7D,#163B5E);color:#fff;font:500 .95rem 'Outfit';cursor:pointer;margin-top:6px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.alert{border:1px solid rgba(233,183,92,.35);background:rgba(233,183,92,.07);color:#F3D9A4;border-radius:10px;padding:12px 14px;font-size:.88rem;margin-bottom:18px;display:none}
+.alert.show{display:block}
+.row{display:flex;justify-content:space-between;font-size:.88rem;color:var(--dim);margin-top:20px}
+.foot{text-align:center;color:var(--dim);font-size:.9rem;margin-top:22px}
+</style>
+</head>
+<body>
+<main class="box">
+  <a class="brand" href="index.html"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+  <div class="panel">
+    <h1>Sign in to your panel</h1>
+    <p class="sub">Manage your servers, billing and tickets.</p>
+    <div class="alert" id="alert" role="alert"></div>
+    <form id="form" novalidate>
+      <div class="field"><label for="email">Email address</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com"><div class="err" id="eErr"></div></div>
+      <div class="field"><label for="pw">Password <a href="#" id="forgot" style="font-size:.82rem">Forgot?</a></label><input id="pw" type="password" autocomplete="current-password"><div class="err" id="pErr"></div></div>
+      <button class="btn" id="submit" type="submit">Sign in</button>
+    </form>
+    <div class="row"><span>Two-factor is enforced on billing changes.</span></div>
+  </div>
+  <p class="foot">New to SIFT? <a href="register.html">Create an account</a></p>
+</main>
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const LOCK_KEY='sift.v1.lock', FAIL_KEY='sift.v1.fails';
+  const next=new URLSearchParams(location.search).get('next')||'dashboard.html';
+  let lockTimer=null;
+  function users(){try{return JSON.parse(localStorage.getItem('sift.v1.users'))||[]}catch(e){return[]}}
+
+  function lockedUntil(){return +localStorage.getItem(LOCK_KEY)||0}
+  function renderLock(){
+    const left=Math.ceil((lockedUntil()-Date.now())/1000);
+    const btn=$('submit');
+    if(left>0){btn.disabled=true;$('alert').className='alert show';$('alert').textContent='Too many attempts. Try again in '+left+' seconds.';clearTimeout(lockTimer);lockTimer=setTimeout(renderLock,1000);}
+    else{btn.disabled=false;if($('alert').textContent.indexOf('Too many')===0){$('alert').className='alert';}}
+  }
+  renderLock();
+
+  $('forgot').onclick=e=>{e.preventDefault();const em=$('email').value.trim();$('alert').className='alert show';$('alert').textContent=em&&/^\S+@\S+\.\S+$/.test(em)?'If an account exists for '+em+', a reset link is on its way.':'Enter your email above first, then tap Forgot again.';};
+
+  $('form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const email=$('email').value.trim().toLowerCase(), pw=$('pw').value;
+    let bad=false;
+    $('eErr').textContent=!email?'Enter your email address.':!/^\S+@\S+\.\S+$/.test(email)?'That doesn\u2019t look like a valid email address.':'';
+    $('pErr').textContent=!pw?'Enter your password.':'';
+    $('email').classList.toggle('bad',!!$('eErr').textContent);
+    $('pw').classList.toggle('bad',!!$('pErr').textContent);
+    if($('eErr').textContent||$('pErr').textContent) return;
+    if(lockedUntil()>Date.now()) return renderLock();
+
+    const u=users().find(x=>x.email===email);
+    const valid=u && u.pw===btoa(unescape(encodeURIComponent(pw)));
+    if(!valid){
+      const fails=(+localStorage.getItem(FAIL_KEY)||0)+1;
+      localStorage.setItem(FAIL_KEY,fails);
+      if(fails>=3){localStorage.setItem(LOCK_KEY,Date.now()+45000);localStorage.setItem(FAIL_KEY,0);renderLock();return;}
+      $('alert').className='alert show';
+      $('alert').textContent=u?'That password doesn\u2019t match this account. '+(3-fails)+' attempts left before a short lock.':'We couldn\u2019t find an account with that email and password.';
+      return;
+    }
+    localStorage.setItem(FAIL_KEY,0);
+    localStorage.setItem('sift.v1.session',JSON.stringify({email:u.email,first:u.first,accountId:u.accountId,createdAt:u.createdAt}));
+    location.href=next;
+  });
+})();
+</script>
+</body>
+</html>

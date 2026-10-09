@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pricing · SIFT</title>
+<meta name="description" content="Minecraft server plans on dedicated Ryzen hardware. Fixed monthly prices, 32-day money-back guarantee.">
+<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<style>
+@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+
+:root{--bg:#08090B;--bg2:#0D1014;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--blue2:#8AD1FF;--copper:#C87A43;--ok:#4ED08A;--bad:#F2685F}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.7 'Outfit',system-ui,sans-serif}
+body{background:radial-gradient(900px 500px at 85% -10%,rgba(87,184,255,.10),transparent 60%),var(--bg);min-height:100vh}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:28px;padding:14px 32px;border-bottom:1px solid var(--line);background:rgba(8,9,11,.82);backdrop-filter:blur(10px)}
+.nav-links{display:flex;gap:22px;font-size:.92rem;color:var(--mute)}.nav-links a:hover,.nav-links a[aria-current]{color:#fff}
+.nav-right{margin-left:auto;display:flex;gap:14px;align-items:center}
+.brand-lock{display:inline-flex;align-items:center;gap:.5rem}
+.brandmark{width:36px;height:36px;object-fit:contain;filter:drop-shadow(0 4px 14px rgba(87,184,255,.28))}
+.brandword{font-family:'Outfit';font-weight:600;font-size:1.05rem;letter-spacing:.14em}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--ink);font:500 .9rem 'Outfit';cursor:pointer;transition:.18s}
+.btn:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.08)}
+.btn--primary{background:linear-gradient(180deg,#1F4F7D,#163B5E);border-color:rgba(87,184,255,.45)}
+.btn--primary:hover{border-color:var(--blue)}
+.btn--ghost{border-color:transparent;background:none;color:var(--mute)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+.kicker{font:500 .72rem 'JetBrains Mono';letter-spacing:.14em;text-transform:uppercase;color:var(--blue);display:flex;gap:10px;align-items:center}
+.kicker::before{content:"";width:28px;height:1px;background:var(--blue)}
+h1{font-weight:500;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.04;letter-spacing:-.03em;margin:14px 0 16px}
+h2{font-weight:500;font-size:clamp(1.6rem,3vw,2.3rem);line-height:1.1;letter-spacing:-.025em;margin:10px 0 12px}
+h3{font-weight:500;font-size:1.15rem;margin:0 0 6px;letter-spacing:-.01em}
+.lead{color:var(--mute);font-size:1.08rem;max-width:640px}
+section{padding:80px 0;border-top:1px solid var(--line)}
+.hero{padding:80px 0 50px}
+.toggle{display:inline-flex;border:1px solid var(--line2);border-radius:999px;padding:4px;margin-top:26px;background:#0B0D11}
+.toggle button{background:none;border:0;color:var(--mute);font:500 .85rem 'Outfit';padding:8px 16px;border-radius:999px;cursor:pointer}
+.toggle button.on{background:rgba(87,184,255,.16);color:#fff}
+.plans{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
+.plan{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border:1px solid var(--line);border-radius:14px;padding:26px 22px;display:flex;flex-direction:column;transition:.2s}
+.plan:hover{border-color:var(--line2);transform:translateY(-2px)}
+.plan--hot{border-color:rgba(200,122,67,.5);background:linear-gradient(180deg,rgba(200,122,67,.08),rgba(255,255,255,.01))}
+.plan__tag{position:absolute;top:-11px;left:22px;font:500 .66rem 'JetBrains Mono';letter-spacing:.12em;text-transform:uppercase;background:var(--copper);color:#140A04;padding:4px 9px;border-radius:999px}
+.price{font:400 2.6rem 'JetBrains Mono';letter-spacing:-.03em;margin:16px 0 2px}
+.price small{font-size:.8rem;color:var(--dim)}
+.spec{margin:18px 0 22px;border-top:1px solid var(--line)}
+.spec div{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:.9rem;color:var(--mute)}
+.spec b{font:400 .85rem 'JetBrains Mono';color:var(--ink)}
+.plan .btn{margin-top:auto;justify-content:center}
+.cmp{width:100%;border-collapse:collapse;margin-top:30px;font-size:.92rem}
+.cmp th,.cmp td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--line);color:var(--mute)}
+.cmp th{color:var(--ink);font-weight:500}
+.cmp td.mono{color:var(--ink)}
+.order{margin-top:30px;display:none;gap:26px;grid-template-columns:1.1fr .9fr}
+.order.open{display:grid}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border:1px solid var(--line);border-radius:14px;padding:26px}
+.field{display:grid;gap:8px;margin-bottom:16px}.field label{font-size:.85rem;color:var(--mute)}
+input,select{width:100%;background:#0B0D11;border:1px solid var(--line2);border-radius:8px;padding:12px 14px;color:var(--ink);font:400 .95rem 'Outfit';outline:none}
+input:focus,select:focus{border-color:var(--blue)}
+.err{color:var(--bad);font-size:.82rem;min-height:1.1em}
+.sum{display:flex;justify-content:space-between;padding:8px 0;color:var(--mute);font-size:.92rem;border-bottom:1px dashed var(--line)}
+.sum.total{color:var(--ink);font-weight:500;font-size:1.05rem;border-bottom:0}
+.toast{position:fixed;bottom:24px;right:24px;background:#12161C;border:1px solid var(--line2);border-radius:10px;padding:14px 18px;font-size:.9rem;max-width:340px;transform:translateY(140%);transition:.35s;z-index:99}
+.toast.show{transform:none}
+footer{border-top:1px solid var(--line);padding:46px 0 36px;color:var(--dim);font-size:.9rem;margin-top:60px}
+@media(max-width:1000px){.plans{grid-template-columns:repeat(2,1fr)}.order{grid-template-columns:1fr}}
+@media(max-width:620px){.plans{grid-template-columns:1fr}.nav-links{display:none}nav{padding:12px 18px}.wrap{padding:0 18px}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand-lock" href="index.html"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
+  <div class="nav-links">
+    <a href="hosting.html">Game hosting</a><a href="pricing.html" aria-current="page">Pricing</a><a href="locations.html">Locations</a><a href="docs.html">Docs</a><a href="status.html">Status</a><a href="support.html">Support</a>
+  </div>
+  <div class="nav-right">
+    <a class="btn btn--ghost" href="login.html" id="navAuth">Sign in</a>
+    <a class="btn btn--primary" href="#plans">Deploy a server</a>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="kicker">Pricing</div>
+  <h1>Fixed prices.<br>Real hardware.</h1>
+  <p class="lead">Every plan runs on dedicated AMD Ryzen cores and NVMe Gen4 storage. No shared CPU, no overselling, and the price on this page is the price on your invoice.</p>
+  <div class="toggle" role="group" aria-label="Billing cycle">
+    <button class="on" data-cycle="monthly">Monthly</button>
+    <button data-cycle="yearly">Yearly · 2 months free</button>
+  </div>
+  <div class="toggle" role="group" aria-label="Currency" style="margin-left:10px">
+    <button class="on" data-cur="GBP">£ GBP</button><button data-cur="EUR">€ EUR</button><button data-cur="USD">$ USD</button>
+  </div>
+</header>
+
+<section id="plans" style="border-top:0;padding-top:10px">
+  <div class="wrap">
+    <div class="plans" id="plans-grid"></div>
+    <p class="mono" style="color:var(--dim);font-size:.78rem;margin-top:22px">All prices include VAT where applicable. Billed in advance. 32-day money-back guarantee on first order.</p>
+
+    <div class="order card" id="orderPanel">
+      <div>
+        <div class="kicker">New server</div>
+        <h2 style="font-size:1.6rem" id="orderTitle">Deploy a server</h2>
+        <form id="orderForm" novalidate>
+          <div class="field"><label for="oName">Server name</label><input id="oName" maxlength="24" placeholder="emberfall" autocomplete="off"><div class="err" data-err="oName"></div></div>
+          <div class="field"><label for="oRegion">Region</label>
+            <select id="oRegion">
+              <option value="lon">London, UK · lon-r4</option><option value="ams">Amsterdam, NL · ams-r9</option><option value="fra">Frankfurt, DE · fra-r9</option><option value="par">Paris, FR · par-r2</option><option value="nyc">New York, US · nyc-r1</option><option value="sin">Singapore · sin-r3</option>
+            </select></div>
+          <div class="field"><label for="oSoft">Server software</label>
+            <select id="oSoft"><option value="paper">Paper · recommended</option><option value="purpur">Purpur</option><option value="fabric">Fabric</option><option value="neoforge">NeoForge</option><option value="vanilla">Vanilla</option></select></div>
+          <div class="field"><label for="oVer">Minecraft version</label>
+            <select id="oVer"><option>1.21.4</option><option>1.21.3</option><option>1.20.6</option><option>1.19.4</option></select></div>
+          <div class="field"><label for="oCycle">Billing</label>
+            <select id="oCycle"><option value="monthly">Monthly</option><option value="yearly">Yearly (2 months free)</option></select></div>
+          <div class="field"><label for="oTerms" style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="oTerms" style="width:auto"> I agree to the Terms of Service and the Acceptable Use Policy.</label><div class="err" data-err="oTerms"></div></div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+            <button class="btn btn--primary" type="submit">Deploy · <span id="oTotal">£4.20</span> / mo</button>
+            <button class="btn btn--ghost" type="button" id="oCancel">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <aside>
+        <div class="label mono" style="font:500 .7rem 'JetBrains Mono';letter-spacing:.12em;color:var(--dim);text-transform:uppercase">Summary</div>
+        <div style="margin-top:14px">
+          <div class="sum"><span>Plan</span><span id="sPlan">Shale</span></div>
+          <div class="sum"><span>Region</span><span id="sRegion">London</span></div>
+          <div class="sum"><span>Software</span><span id="sSoft">Paper</span></div>
+          <div class="sum"><span>Setup fee</span><span>£0.00</span></div>
+          <div class="sum total"><span>Due today</span><span id="sDue">£4.20</span></div>
+        </div>
+        <p style="color:var(--dim);font-size:.85rem;margin-top:18px">You won't be charged until your server is online. Cancel within 32 days for a full refund.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Compare</div>
+    <h2>What's in each plan</h2>
+    <table class="cmp">
+      <thead><tr><th>Plan</th><th>Memory</th><th>CPU</th><th>Storage</th><th>Player slots</th><th>Backups</th></tr></thead>
+      <tbody id="cmp-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<footer><div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px"><span>© 2026 SIFT Hosting Ltd · Erith, United Kingdom</span><span class="mono" style="font-size:.78rem">Prices in GBP ex. VAT unless shown</span></div></footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  const PLANS = [
+    {id:'shale',name:'Shale',gbp:4.20,ram:2,cpu:1,disk:20,slots:10,backups:'2 restore points',blurb:'For a friends-only world.'},
+    {id:'flint',name:'Flint',gbp:8.10,ram:4,cpu:2,disk:40,slots:25,backups:'5 restore points',blurb:'Small community, plugins welcome.'},
+    {id:'galena',name:'Galena',gbp:15.40,ram:8,cpu:3,disk:80,slots:60,backups:'7 restore points',blurb:'Most chosen by networks.',hot:true},
+    {id:'obsidian',name:'Obsidian',gbp:26.90,ram:16,cpu:6,disk:160,slots:120,backups:'14 restore points',blurb:'Large modpacks and networks.'}
+  ];
+  const RATE={GBP:{s:'£',r:1},EUR:{s:'€',r:1.17},USD:{s:'$',r:1.27}};
+  let cycle='monthly', cur='GBP', selected='shale';
+  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  const fmt=(gbp)=>{const c=RATE[cur];return c.s+(gbp*c.r).toFixed(2);};
+  const priceFor=p=>cycle==='yearly'?p.gbp*10/12:p.gbp;
+
+  function renderPlans(){
+    $('#plans-grid').innerHTML=PLANS.map(p=>`
+      <article class="plan ${p.hot?'plan--hot':''}">
+        ${p.hot?'<span class="plan__tag">Most deployed</span>':''}
+        <div class="mono" style="font-size:.72rem;letter-spacing:.12em;color:var(--dim);text-transform:uppercase">${p.name}</div>
+        <div class="price">${fmt(priceFor(p))}<small> / mo</small></div>
+        <p style="color:var(--mute);font-size:.9rem;margin:0">${p.blurb}</p>
+        <div class="spec">
+          <div>Memory<b>${p.ram} GB</b></div><div>CPU<b>${p.cpu} dedicated core${p.cpu>1?'s':''}</b></div>
+          <div>NVMe storage<b>${p.disk} GB</b></div><div>Player slots<b>${p.slots}</b></div>
+        </div>
+        <button class="btn ${p.hot?'btn--primary':''}" data-pick="${p.id}">Deploy ${p.name}</button>
+      </article>`).join('');
+    $('#cmp-body').innerHTML=PLANS.map(p=>`<tr><td style="color:var(--ink)">${p.name}</td><td class="mono">${p.ram} GB</td><td class="mono">${p.cpu}</td><td class="mono">${p.disk} GB</td><td class="mono">${p.slots}</td><td>${p.backups}</td></tr>`).join('');
+    $$('[data-pick]').forEach(b=>b.onclick=()=>pick(b.dataset.pick));
+    updateSummary();
+  }
+
+  function pick(id){
+    selected=id; $('#orderPanel').classList.add('open');
+    const p=PLANS.find(x=>x.id===id);
+    $('#orderTitle').textContent='Deploy '+p.name;
+    updateSummary();
+    $('#orderPanel').scrollIntoView({behavior:'smooth',block:'start'});
+    setTimeout(()=>$('#oName').focus({preventScroll:true}),300);
+  }
+
+  function updateSummary(){
+    const p=PLANS.find(x=>x.id===selected);
+    const price=fmt(priceFor(p));
+    $('#sPlan').textContent=p.name;
+    $('#sRegion').textContent=$('#oRegion').selectedOptions[0].text.split(',')[0];
+    $('#sSoft').textContent=$('#oSoft').selectedOptions[0].text.split(' ·')[0];
+    $('#oTotal').textContent=price; $('#sDue').textContent=cycle==='yearly'?fmt(p.gbp*10):price;
+  }
+
+  function session(){try{return JSON.parse(localStorage.getItem('sift.v1.session'))}catch(e){return null}}
+  function orders(){try{return JSON.parse(localStorage.getItem('sift.v1.orders'))||[]}catch(e){return[]}}
+  function toast(msg){const t=$('#toast');t.innerHTML=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3800);}
+
+  const sess=session();
+  if(sess){$('#navAuth').textContent=sess.first||'Account';$('#navAuth').href='dashboard.html';}
+
+  $$('[data-cycle]').forEach(b=>b.onclick=()=>{cycle=b.dataset.cycle;$$('[data-cycle]').forEach(x=>x.classList.toggle('on',x===b));$('#oCycle').value=cycle;renderPlans();});
+  $$('[data-cur]').forEach(b=>b.onclick=()=>{cur=b.dataset.cur;$$('[data-cur]').forEach(x=>x.classList.toggle('on',x===b));renderPlans();});
+  ['#oRegion','#oSoft'].forEach(s=>$(s).onchange=updateSummary);
+  $('#oCycle').onchange=e=>{cycle=e.target.value;$$('[data-cycle]').forEach(x=>x.classList.toggle('on',x.dataset.cycle===cycle));renderPlans();};
+  $('#oCancel').onclick=()=>$('#orderPanel').classList.remove('open');
+  $('#oName').addEventListener('input',e=>{e.target.value=e.target.value.toLowerCase().replace(/[^a-z0-9-]/g,'')});
+
+  $('#orderForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    let ok=true;
+    const name=$('#oName').value.trim();
+    const names=orders().map(o=>o.name);
+    const errs={oName: !name?'Choose a server name.': name.length<3?'Use at least 3 characters.': names.includes(name)?'You already have a server called '+name+'.':'',
+                oTerms: $('#oTerms').checked?'':'Please accept the terms to continue.'};
+    Object.entries(errs).forEach(([k,v])=>{document.querySelector(`[data-err="${k}"]`).textContent=v; if(v) ok=false;});
+    if(!ok) return;
+    const params=new URLSearchParams({name,plan:selected,region:$('#oRegion').value,software:$('#oSoft').value,version:$('#oVer').value,cycle});
+    toast('Opening your request…');
+    setTimeout(()=>location.href='request.html?'+params.toString(),500);
+  });
+
+  renderPlans();
+  const want=new URLSearchParams(location.search).get('plan'); if(want) pick(want);
+})();
+</script>
+</body>
+</html>

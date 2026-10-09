@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Docs · SIFT</title>
+<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<style>
+@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+
+:root{--bg:#08090B;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--blue2:#8AD1FF;--copper:#C87A43;--ok:#4ED08A}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.7 'Outfit',system-ui,sans-serif}
+body{background:radial-gradient(900px 500px at 85% -10%,rgba(87,184,255,.10),transparent 60%),var(--bg);min-height:100vh}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:28px;padding:14px 32px;border-bottom:1px solid var(--line);background:rgba(8,9,11,.82);backdrop-filter:blur(10px)}
+.nav-links{display:flex;gap:22px;font-size:.92rem;color:var(--mute)}.nav-links a:hover,.nav-links a[aria-current]{color:#fff}
+.nav-right{margin-left:auto;display:flex;gap:14px;align-items:center}
+.brand-lock{display:inline-flex;align-items:center;gap:.5rem}
+.brandmark{width:36px;height:36px;object-fit:contain;filter:drop-shadow(0 4px 14px rgba(87,184,255,.28))}
+.brandword{font-weight:600;font-size:1.05rem;letter-spacing:.14em}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--ink);font:500 .9rem 'Outfit'}
+.btn--primary{background:linear-gradient(180deg,#1F4F7D,#163B5E);border-color:rgba(87,184,255,.45)}
+.btn--ghost{border-color:transparent;background:none;color:var(--mute)}
+.layout{max-width:1180px;margin:0 auto;padding:40px 32px 80px;display:grid;grid-template-columns:240px 1fr;gap:56px}
+.side{position:sticky;top:90px;align-self:start;display:flex;flex-direction:column;gap:4px}
+.side .label{font:500 .66rem 'JetBrains Mono';letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:18px 0 8px}
+.side a{padding:7px 10px;border-radius:7px;color:var(--mute);font-size:.92rem}
+.side a:hover,.side a.on{color:#fff;background:rgba(255,255,255,.04)}
+.search{width:100%;background:#0B0D11;border:1px solid var(--line2);border-radius:9px;padding:10px 12px;color:var(--ink);font:400 .9rem 'Outfit';outline:none;margin-bottom:6px}
+.search:focus{border-color:var(--blue)}
+.kicker{font:500 .72rem 'JetBrains Mono';letter-spacing:.14em;text-transform:uppercase;color:var(--blue);display:flex;gap:10px;align-items:center}
+.kicker::before{content:"";width:28px;height:1px;background:var(--blue)}
+h1{font-weight:500;font-size:2.4rem;letter-spacing:-.03em;margin:12px 0 10px}
+h2{font-weight:500;font-size:1.35rem;letter-spacing:-.02em;margin:44px 0 10px;scroll-margin-top:90px}
+p{color:var(--mute)}
+code,pre{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.84rem}
+code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px;color:var(--blue2)}
+pre{background:#06070A;border:1px solid var(--line);border-radius:10px;padding:16px 18px;overflow:auto;color:rgba(226,235,245,.8)}
+.art{display:grid;gap:12px;margin-top:12px}
+.art a{display:flex;justify-content:space-between;gap:16px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.02)}
+.art a:hover{border-color:var(--line2)}
+.art span{color:var(--mute);font-size:.9rem}
+.tag{font:500 .66rem 'JetBrains Mono';letter-spacing:.08em;text-transform:uppercase;color:var(--dim);white-space:nowrap;align-self:center}
+.none{display:none;color:var(--dim);padding:20px 0}
+.callout{border:1px solid rgba(87,184,255,.25);background:rgba(87,184,255,.05);border-radius:12px;padding:16px 18px;margin:20px 0;color:var(--mute);font-size:.94rem}
+footer{border-top:1px solid var(--line);padding:40px 32px;color:var(--dim);font-size:.9rem;text-align:center}
+@media(max-width:900px){.layout{grid-template-columns:1fr;padding:24px 18px}.side{position:static}.nav-links{display:none}nav{padding:12px 18px}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand-lock" href="index.html"><img class="brandmark" src="assets/images/sift-logo.png" alt="SIFT" width="36" height="36"><b class="brandword">SIFT</b></a>
+  <div class="nav-links">
+    <a href="hosting.html">Game hosting</a><a href="pricing.html">Pricing</a><a href="locations.html">Locations</a><a href="docs.html" aria-current="page">Docs</a><a href="status.html">Status</a><a href="support.html">Support</a>
+  </div>
+  <div class="nav-right">
+    <a class="btn btn--ghost" href="login.html" data-auth>Sign in</a>
+    <a class="btn btn--primary" href="pricing.html">Deploy a server</a>
+  </div>
+</nav>
+
+<div class="layout">
+  <aside class="side" id="side">
+    <input class="search" id="q" placeholder="Search the docs" aria-label="Search the docs">
+    <div class="label">Getting started</div>
+    <a href="#first" class="on">Deploy your first server</a>
+    <a href="#domain">Point a domain at your server</a>
+    <a href="#software">Choose Paper, Purpur or Fabric</a>
+    <div class="label">Operating</div>
+    <a href="#console">Using the console</a>
+    <a href="#backups">Backups and restore points</a>
+    <a href="#ddos">How DDoS filtering works</a>
+    <div class="label">Account</div>
+    <a href="#billing">Billing, cycles and refunds</a>
+    <a href="#2fa">Two-factor authentication</a>
+  </aside>
+
+  <main id="content">
+    <div class="kicker">Documentation</div>
+    <h1>Guides for running a server</h1>
+    <p>Everything you need to get a Minecraft server online, keep it healthy and understand what you're paying for. Written by the engineers who run the fleet.</p>
+
+    <h2 id="first">Deploy your first server</h2>
+    <p>Choose a plan on the <a href="pricing.html" style="color:var(--blue)">pricing page</a>, pick a region and a name. Your server gets an address of <code>name.sift.gg</code> straight away. Provisioning takes about 47 seconds on average and runs through twelve logged steps.</p>
+    <pre>/whitelist add YourName
+/op YourName
+/gamemode survival</pre>
+
+    <h2 id="domain">Point a domain at your server</h2>
+    <p>Create a <code>CNAME</code> record for your domain pointing at your server address. Players connect on the default port <code>25565</code>, so no SRV record is required unless you use a non-standard port.</p>
+    <div class="callout">If your DNS provider proxies traffic, switch that record to DNS-only. Minecraft uses a custom protocol and proxies can break the handshake.</div>
+
+    <h2 id="software">Choose Paper, Purpur or Fabric</h2>
+    <p><strong style="color:var(--ink);font-weight:500">Paper</strong> is the default and runs most plugin setups. <strong style="color:var(--ink);font-weight:500">Purpur</strong> adds gameplay options on top of Paper. <strong style="color:var(--ink);font-weight:500">Fabric</strong> and <strong style="color:var(--ink);font-weight:500">NeoForge</strong> are for mod packs. Switching software later keeps your world files.</p>
+
+    <h2 id="console">Using the console</h2>
+    <p>The console shows live output and accepts server commands. Run <code>help</code> for the command list. Commands only work while the server is running.</p>
+
+    <h2 id="backups">Backups and restore points</h2>
+    <p>Nightly snapshots are kept off-node. The number you keep depends on your plan, from 2 restore points on Shale to 14 on Obsidian. Restoring a snapshot replaces the current world, so take a manual backup first.</p>
+
+    <h2 id="ddos">How DDoS filtering works</h2>
+    <p>Filtering runs at the edge of our network, before traffic reaches the node. Attacks are dropped there and your server only receives legitimate connections. Mitigation is included on every plan.</p>
+
+    <h2 id="billing">Billing, cycles and refunds</h2>
+    <p>Plans are billed monthly or yearly, in advance. Yearly plans include two months free. You have 32 days from your first order to request a full refund, and nothing is charged until your server is online.</p>
+
+    <h2 id="2fa">Two-factor authentication</h2>
+    <p>Two-factor is required before you change billing details or remove a server. Set it up from your account settings once you have signed in.</p>
+
+    <p class="none" id="none">No articles match that search. Try another word, or <a href="support.html" style="color:var(--blue)">open a support ticket</a>.</p>
+  </main>
+</div>
+
+<footer>© 2026 SIFT Hosting Ltd · Erith, United Kingdom</footer>
+
+<script>
+(function(){
+  const q=document.getElementById('q');
+  const sections=[...document.querySelectorAll('#content h2')];
+  q.addEventListener('input',()=>{
+    const v=q.value.trim().toLowerCase();
+    let shown=0;
+    sections.forEach(h=>{
+      const body=[];let n=h.nextElementSibling;
+      while(n&&n.tagName!=='H2'&&n.id!=='none'){body.push(n);n=n.nextElementSibling;}
+      const match=!v||(h.textContent+' '+body.map(b=>b.textContent).join(' ')).toLowerCase().includes(v);
+      h.style.display=match?'':'none';body.forEach(b=>b.style.display=match?'':'none');
+      if(match)shown++;
+    });
+    document.getElementById('none').style.display=shown?'none':'block';
+  });
+  try{const s=JSON.parse(localStorage.getItem('sift.v1.session'));if(s){document.querySelectorAll('[data-auth]').forEach(a=>{a.textContent=s.first||'Account';a.href='dashboard.html';});}}catch(e){}
+})();
+</script>
+</body>
+</html>

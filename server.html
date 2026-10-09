@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Server · SIFT</title>
+<link rel="icon" type="image/png" href="assets/images/sift-logo.png">
+<style>
+@font-face{font-family:'Outfit';src:url('assets/fonts/outfit-latin-var.woff2') format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('assets/fonts/jetbrainsmono-latin-var.woff2') format('woff2');font-weight:100 800;font-display:swap}
+:root{--bg:#08090B;--panel:#0C0E12;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#F2F5F8;--mute:rgba(226,235,245,.6);--dim:rgba(226,235,245,.38);--blue:#57B8FF;--blue2:#8AD1FF;--copper:#C87A43;--ok:#4ED08A;--warn:#E9B75C;--bad:#F2685F}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:300 15px/1.6 'Outfit',system-ui,sans-serif;min-height:100%}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.top{display:flex;align-items:center;gap:14px;padding:14px 28px;border-bottom:1px solid var(--line);background:rgba(8,9,11,.92);position:sticky;top:0;z-index:5;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:9px}.brand img{width:30px;height:30px;object-fit:contain}.brand b{font-weight:600;letter-spacing:.14em}
+.crumb{color:var(--dim);font-size:.9rem}
+.right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--ink);font:500 .86rem 'Outfit';cursor:pointer}
+.btn:hover{border-color:rgba(255,255,255,.3)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn--primary{background:linear-gradient(180deg,#1F4F7D,#163B5E);border-color:rgba(87,184,255,.45)}
+.btn--ok{border-color:rgba(78,208,138,.4);color:var(--ok)}
+.btn--bad{border-color:rgba(242,104,95,.4);color:var(--bad)}
+.btn--sm{padding:6px 12px;font-size:.8rem}
+.wrap{padding:24px 28px 60px;max-width:1280px;margin:0 auto}
+.head{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+h1{font-weight:500;font-size:1.8rem;letter-spacing:-.02em;margin:0 0 4px}
+.addr{font:400 .9rem 'JetBrains Mono';color:var(--blue2)}
+.st{display:inline-flex;gap:8px;align-items:center;font:500 .72rem 'JetBrains Mono';letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px;border:1px solid var(--line2)}
+.st i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.st--run{color:var(--ok);border-color:rgba(78,208,138,.35)}.st--prov{color:var(--warn);border-color:rgba(233,183,92,.35)}.st--off{color:var(--dim)}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:6px 0 20px;overflow-x:auto}
+.tabs button{background:none;border:0;padding:11px 15px;color:var(--mute);font:500 .9rem 'Outfit';border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+.tabs button:hover{color:#fff}
+.tabs button.on{color:#fff;border-color:var(--blue)}
+.pane{display:none}.pane.on{display:block}
+.grid{display:grid;grid-template-columns:1.6fr 1fr;gap:18px}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border:1px solid var(--line);border-radius:14px;padding:20px}
+.card h2{font-weight:500;font-size:.98rem;margin:0 0 14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.label{font:500 .66rem 'JetBrains Mono';letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.console{background:#06070A;border:1px solid var(--line);border-radius:10px;height:380px;overflow:auto;padding:14px 16px;font:400 .8rem/1.7 'JetBrains Mono';color:rgba(226,235,245,.78)}
+.console .i{color:var(--blue)}.console .w{color:var(--warn)}.console .e{color:var(--bad)}.console .ok{color:var(--ok)}.console .cmd{color:var(--ink)}
+.cmdline{display:flex;gap:8px;margin-top:10px}
+.cmdline input,input,select,textarea{flex:1;background:#06070A;border:1px solid var(--line2);border-radius:8px;padding:10px 12px;color:var(--ink);font:400 .88rem 'Outfit';outline:none;width:100%}
+.cmdline input{font-family:'JetBrains Mono';font-size:.85rem}
+input:focus,textarea:focus,select:focus{border-color:var(--blue)}
+textarea{font:400 .8rem/1.6 'JetBrains Mono';min-height:300px;resize:vertical}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.kv div{padding:12px;border:1px solid var(--line);border-radius:10px}
+.kv b{display:block;font:400 1.15rem 'JetBrains Mono';margin-top:4px}
+.kv small{color:var(--dim);font-size:.78rem}
+.bar{height:6px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#2E8FE0,#8AD1FF);transition:width .6s}
+.spark{width:100%;height:110px;margin-top:6px}
+.steps{display:grid;gap:8px;font-size:.88rem}
+.steps div{display:flex;gap:10px;align-items:center;color:var(--mute)}
+.steps div i{width:8px;height:8px;border-radius:50%;border:1px solid var(--dim)}
+.steps div.done i{background:var(--ok);border-color:var(--ok)}
+.steps div.now i{background:var(--warn);border-color:var(--warn)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.row:last-child{border:0}
+.row span:first-child{color:var(--mute)}
+.mono-v{font:400 .84rem 'JetBrains Mono'}
+.files{display:grid;grid-template-columns:260px 1fr;gap:16px}
+.tree button{display:flex;width:100%;gap:10px;align-items:center;background:none;border:0;color:var(--mute);padding:8px 10px;border-radius:7px;font:400 .86rem 'JetBrains Mono';cursor:pointer;text-align:left}
+.tree button:hover{background:rgba(255,255,255,.04);color:#fff}
+.tree button.on{background:rgba(87,184,255,.1);color:#fff}
+.tree .d{color:var(--dim);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;margin:12px 10px 4px}
+.empty{text-align:center;padding:40px 18px;border:1px dashed var(--line2);border-radius:12px;color:var(--mute);font-size:.92rem}
+.empty b{display:block;color:var(--ink);font-weight:500;font-size:1rem;margin-bottom:4px}
+.field{display:grid;gap:7px;margin-bottom:14px}
+.field label{font-size:.84rem;color:var(--mute)}
+.err{color:var(--bad);font-size:.82rem;min-height:1.1em}
+.toggle{position:relative;width:42px;height:24px;border-radius:999px;background:rgba(255,255,255,.1);border:0;cursor:pointer;flex:none}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.toggle.on{background:rgba(78,208,138,.5)}.toggle.on::after{left:21px}
+.modal{position:fixed;inset:0;background:rgba(4,5,7,.7);display:none;place-items:center;z-index:30;padding:18px}
+.modal.open{display:grid}
+.modal .card{width:100%;max-width:440px;background:#0E1116}
+.toast{position:fixed;bottom:22px;right:22px;background:#12161C;border:1px solid var(--line2);border-radius:10px;padding:13px 16px;font-size:.88rem;transform:translateY(160%);transition:.35s;z-index:40;max-width:340px}
+.toast.show{transform:none}
+.hide{display:none!important}
+.gate{text-align:center;padding:80px 20px}
+.gate h2{font-weight:500}.gate p{color:var(--mute)}
+.list{display:grid;gap:8px}
+.item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.9rem}
+.item small{display:block;color:var(--dim);font:400 .76rem 'JetBrains Mono'}
+@media(max-width:960px){.grid,.files{grid-template-columns:1fr}.wrap{padding:16px}.top{padding:12px 16px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
+  <span class="crumb">/ <a href="dashboard.html" style="color:var(--mute)">Servers</a> / <span id="crumbName">…</span></span>
+  <div class="right" id="powerBtns">
+    <button class="btn btn--ok" id="btnStart">Start</button>
+    <button class="btn" id="btnRestart">Restart</button>
+    <button class="btn btn--bad" id="btnStop">Stop</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="gate" class="card gate hide">
+    <h2>Sign in to manage this server</h2>
+    <p>Server controls are only available to the account that deployed it.</p>
+    <a class="btn btn--ok" href="login.html">Sign in</a>
+  </div>
+  <div id="notFound" class="card gate hide">
+    <h2>We couldn’t find that server</h2>
+    <p>It may have been removed, or the link is from a different account.</p>
+    <a class="btn" href="dashboard.html">Back to servers</a>
+  </div>
+
+  <div id="main" class="hide">
+    <div class="head">
+      <div>
+        <h1 id="srvName">—</h1>
+        <div class="addr" id="srvAddr">—</div>
+      </div>
+      <span class="st st--off" id="srvStatus"><i></i>Offline</span>
+    </div>
+
+    <nav class="tabs" role="tablist">
+      <button class="on" data-tab="console">Console</button>
+      <button data-tab="files">Files</button>
+      <button data-tab="backups">Backups</button>
+      <button data-tab="players">Players</button>
+      <button data-tab="schedules">Schedules</button>
+      <button data-tab="settings">Settings</button>
+    </nav>
+
+    <!-- CONSOLE -->
+    <section class="pane on" id="tab-console">
+      <div class="grid">
+        <div class="card">
+          <h2>Console <span class="label" id="srvSoft">—</span></h2>
+          <div class="console" id="console"></div>
+          <form class="cmdline" id="cmdForm" autocomplete="off">
+            <input id="cmd" placeholder="Type a command, e.g. help, list, tps, save-all" aria-label="Server command">
+            <button class="btn" type="submit">Send</button>
+          </form>
+        </div>
+        <div style="display:grid;gap:18px;align-content:start">
+          <div class="card">
+            <h2>Resources <span class="label">Live</span></h2>
+            <div class="kv">
+              <div><small>CPU</small><b id="rCpu">0%</b><div class="bar"><i id="bCpu" style="width:0"></i></div></div>
+              <div><small>Memory</small><b id="rMem">0 GB</b><div class="bar"><i id="bMem" style="width:0"></i></div></div>
+              <div><small>Players</small><b id="rPl">0 / 0</b></div>
+              <div><small>TPS</small><b id="rTps">—</b></div>
+            </div>
+            <svg class="spark" id="spark" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true"></svg>
+          </div>
+          <div class="card">
+            <h2>Provisioning</h2>
+            <div class="steps" id="prov"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILES -->
+    <section class="pane" id="tab-files">
+      <div class="files">
+        <div class="card tree" id="tree"></div>
+        <div class="card">
+          <h2><span id="fileName" class="mono-v">—</span>
+            <span style="display:flex;gap:8px"><button class="btn btn--sm" id="fileRevert" disabled>Revert</button><button class="btn btn--sm btn--primary" id="fileSave" disabled>Save</button></span></h2>
+          <textarea id="fileBody" spellcheck="false" aria-label="File contents" disabled></textarea>
+          <div class="err" id="fileErr"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BACKUPS -->
+    <section class="pane" id="tab-backups">
+      <div class="card">
+        <h2>Backups <span style="display:flex;gap:8px;align-items:center"><span class="label" id="bCount">0 / 0 restore points</span><button class="btn btn--sm btn--primary" id="bNew">Create backup</button></span></h2>
+        <div id="bList" class="list"></div>
+        <div class="empty hide" id="bEmpty"><b>No backups yet</b>Nightly snapshots start after the first 24 hours. You can take a manual backup any time.</div>
+      </div>
+    </section>
+
+    <!-- PLAYERS -->
+    <section class="pane" id="tab-players">
+      <div class="grid">
+        <div class="card">
+          <h2>Whitelist <span class="label" id="wCount">0 entries</span></h2>
+          <form id="wForm" style="display:flex;gap:8px;margin-bottom:14px" novalidate>
+            <input id="wName" maxlength="16" placeholder="Minecraft username" aria-label="Username">
+            <button class="btn btn--primary" type="submit">Add</button>
+          </form>
+          <div class="err" id="wErr" style="margin:-8px 0 10px"></div>
+          <div id="wList" class="list"></div>
+          <div class="empty hide" id="wEmpty"><b>Whitelist is empty</b>Add usernames here before you open the server to players.</div>
+        </div>
+        <div class="card">
+          <h2>Online now</h2>
+          <div class="empty"><b>No players online</b>Players who join this server appear here with their ping and session time.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCHEDULES -->
+    <section class="pane" id="tab-schedules">
+      <div class="grid">
+        <div class="card">
+          <h2>Tasks</h2>
+          <div id="sList" class="list"></div>
+          <div class="empty hide" id="sEmpty"><b>No scheduled tasks</b>Create a restart, backup or command task. Times are shown in UK time.</div>
+        </div>
+        <div class="card">
+          <h2>New task</h2>
+          <form id="sForm" novalidate>
+            <div class="field"><label for="sType">Action</label><select id="sType"><option value="restart">Restart server</option><option value="backup">Create backup</option><option value="command">Run console command</option></select></div>
+            <div class="field"><label for="sTime">Time (UK)</label><input id="sTime" type="time" value="04:00"></div>
+            <div class="field"><label for="sCmd">Command</label><input id="sCmd" placeholder="save-all" disabled></div>
+            <div class="err" id="sErr" style="margin:-8px 0 10px"></div>
+            <button class="btn btn--primary" type="submit">Add task</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="pane" id="tab-settings">
+      <div class="grid">
+        <div class="card">
+          <h2>Server details</h2>
+          <div class="row"><span>Address</span><span class="mono-v" id="sAddr">—</span></div>
+          <div class="row"><span>Software</span><span class="mono-v" id="sSoft">—</span></div>
+          <div class="row"><span>Java runtime</span><span class="mono-v" id="sJava">—</span></div>
+          <div class="row"><span>Region</span><span class="mono-v" id="sRegion">—</span></div>
+          <div class="row"><span>Node</span><span class="mono-v" id="sNode">—</span></div>
+          <div class="row"><span>Player slots</span><span class="mono-v" id="sSlots">—</span></div>
+          <div class="row"><span>Reference</span><span class="mono-v" id="sRef">—</span></div>
+        </div>
+        <div class="card" style="border-color:rgba(242,104,95,.25)">
+          <h2 style="color:var(--bad)">Danger zone</h2>
+          <p style="color:var(--mute);font-size:.92rem;margin-top:0">Deleting a server removes its world, backups and files. Billing stops at the end of the current period. This cannot be undone.</p>
+          <div class="field"><label for="delName">Type <span class="mono-v" id="delHint">—</span> to confirm</label><input id="delName" autocomplete="off"></div>
+          <div class="err" id="delErr" style="margin:-8px 0 10px"></div>
+          <button class="btn btn--bad" id="delBtn">Delete server</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="modal" id="confirm" role="dialog" aria-modal="true" aria-labelledby="cTitle">
+  <div class="card">
+    <h2 id="cTitle">Confirm</h2>
+    <p id="cText" style="color:var(--mute);font-size:.92rem;margin-top:0"></p>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn" id="cNo">Cancel</button>
+      <button class="btn btn--bad" id="cYes">Confirm</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const $$=s=>[...document.querySelectorAll(s)];
+  function read(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}}
+  function write(k,v){localStorage.setItem(k,JSON.stringify(v));}
+  const sess=read('sift.v1.session',null);
+  const id=new URLSearchParams(location.search).get('id');
+  const order=read('sift.v1.orders',[]).find(o=>o.id===id);
+  const KEY=k=>'sift.v1.'+k+'.'+id;
+  const PROV=['Reserving node','Mounting volume','Installing Java runtime','Fetching server jar','Writing server.properties','Opening DDoS filter rules','Allocating memory','Publishing DNS record','Generating world seed','Starting server','Health check','Online'];
+  const RESTORE={shale:2,flint:5,galena:7,obsidian:14};
+  const SLOTS=order?(order.slots||20):20;
+
+  function toast(m){const t=$('toast');t.innerHTML=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3200);}
+  function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function confirmBox(title,text,yes,fn){$('cTitle').textContent=title;$('cText').textContent=text;$('cYes').textContent=yes;$('confirm').classList.add('open');
+    $('cYes').onclick=()=>{$('confirm').classList.remove('open');fn();};}
+  $('cNo').onclick=()=>$('confirm').classList.remove('open');
+
+  if(!sess){$('gate').classList.remove('hide');$('powerBtns').classList.add('hide');return;}
+  if(!order){$('notFound').classList.remove('hide');$('powerBtns').classList.add('hide');return;}
+  $('main').classList.remove('hide');
+
+  /* ---------- header + details ---------- */
+  $('crumbName').textContent=order.name;$('srvName').textContent=order.name;$('srvAddr').textContent=order.address;
+  const soft=(order.software||'Paper')+' '+(order.version||'');
+  $('srvSoft').textContent=soft;$('sSoft').textContent=soft;$('sJava').textContent=(order.version&&/^1\.2[01]/.test(order.version))?'Java 21':'Java 21';
+  $('sAddr').textContent=order.address;$('sRegion').textContent=order.region||'—';$('sNode').textContent=order.node||'assigned';$('sSlots').textContent=SLOTS;$('sRef').textContent=order.reference||'—';
+  $('delHint').textContent=order.name;
+
+  /* ---------- tabs ---------- */
+  $$('.tabs button').forEach(b=>b.onclick=()=>{
+    $$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));
+    $$('.pane').forEach(p=>p.classList.toggle('on',p.id==='tab-'+b.dataset.tab));
+  });
+
+  /* ---------- provisioning + power ---------- */
+  const st={power:'off'};
+  const log=(cls,msg)=>{const c=$('console');const d=document.createElement('div');d.className=cls;d.textContent='['+new Date().toTimeString().slice(0,8)+'] '+msg;c.appendChild(d);c.scrollTop=c.scrollHeight;};
+  function renderProv(){
+    const done=Math.min(PROV.length,Math.floor((Date.now()-order.createdAt)/1000));
+    $('prov').innerHTML=PROV.map((s,i)=>`<div class="${i<done?'done':i===done?'now':''}"><i></i>${s}</div>`).join('');
+    return done>=PROV.length;
+  }
+  function setStatus(){
+    const s=$('srvStatus');
+    const map={run:['st--run','Running'],starting:['st--prov','Starting'],provisioning:['st--prov','Provisioning'],off:['st--off','Offline']};
+    const m=map[st.power];s.className='st '+m[0];s.innerHTML='<i></i>'+m[1];
+    $('btnStart').disabled=st.power!=='off';
+    $('btnStop').disabled=st.power==='off'||st.power==='provisioning';
+    $('btnRestart').disabled=st.power!=='run';
+  }
+  function boot(){st.power='starting';setStatus();log('i','Starting '+order.address+' on '+(order.node||'node')+'…');setTimeout(()=>{st.power='run';setStatus();log('ok','Done! For help, type "help"');},1800);}
+  function stop(note){st.power='off';setStatus();log('w','Stopping server · saving world…');setTimeout(()=>log('ok','Server stopped. World saved.'),900);}
+  $('btnStart').onclick=()=>{if(st.power==='off')boot();};
+  $('btnStop').onclick=()=>{if(st.power!=='off'&&st.power!=='provisioning')confirmBox('Stop server?','Players will be disconnected and the world will be saved first.','Stop server',stop);};
+  $('btnRestart').onclick=()=>{if(st.power!=='run')return;log('w','Restart requested…');st.power='starting';setStatus();setTimeout(()=>{st.power='run';setStatus();log('ok','Restarted.');},1600);};
+
+  if(renderProv()){st.power='run';log('ok','Server is online at '+order.address+' · '+soft);}
+  else{
+    st.power='provisioning';setStatus();log('i','Provisioning '+order.address+'…');
+    const t=setInterval(()=>{if(renderProv()){clearInterval(t);st.power='run';setStatus();log('ok','Server is online at '+order.address);toast('<span class="mono">'+order.address+'</span> is online.');}},1000);
+  }
+  setStatus();
+
+  /* ---------- console ---------- */
+  const replies={help:['Available: help, list, tps, save-all, say <msg>, whitelist add <name>, whitelist list, clear'],tps:['TPS from last 1m, 5m, 15m: 20.0, 20.0, 20.0'],'save-all':['Saved the game'],list:['There are 0 of a max of '+SLOTS+' players online.']};
+  $('cmdForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const raw=$('cmd').value.trim();if(!raw)return;$('cmd').value='';
+    log('cmd','> '+raw);
+    if(st.power!=='run'){log('e','Server is not running. Start it to use the console.');return;}
+    const parts=raw.split(' ');const head=parts[0];
+    if(head==='clear'){$('console').innerHTML='';return;}
+    if(head==='say'){log('i','[Server] '+parts.slice(1).join(' '));return;}
+    if(head==='whitelist'&&parts[1]==='add'&&parts[2]){addWhite(parts[2],true);return;}
+    if(head==='whitelist'&&parts[1]==='list'){const w=read(KEY('whitelist'),[]);log('',w.length?'Whitelisted: '+w.join(', '):'Whitelist is empty');return;}
+    const r=replies[head];if(r){r.forEach(m=>log('',m));return;}
+    log('e','Unknown or incomplete command, see below for error');log('e','<-- here');
+  });
+
+  /* ---------- files ---------- */
+  const DEFAULT_FILES={
+    'server.properties':()=>`#Minecraft server properties
+#${new Date().toUTCString()}
+motd=${order.name} · Powered by SIFT
+max-players=${SLOTS}
+view-distance=10
+simulation-distance=10
+online-mode=true
+white-list=true
+difficulty=normal
+gamemode=survival
+level-name=world
+server-port=25565
+enable-query=false`,
+    'eula.txt':()=>'#By changing the setting below to TRUE you are indicating your agreement to our EULA.\neula=true',
+    'whitelist.json':()=>JSON.stringify(read(KEY('whitelist'),[]).map(n=>({name:n})),null,2),
+    'ops.json':()=>'[]',
+    'logs/latest.log':()=>'[SIFT] Log rotation enabled. Latest 500 lines retained.'
+  };
+  let openFile=null, fileDirty=false;
+  function fileContent(name){const saved=read(KEY('file.'+name),null);return saved!==null?saved:DEFAULT_FILES[name]();}
+  function renderTree(){
+    const tree=$('tree');
+    tree.innerHTML='<div class="d">Root</div>'+Object.keys(DEFAULT_FILES).map(n=>`<button data-f="${n}" class="${openFile===n?'on':''}">${n}</button>`).join('')+'<div class="d">World</div><button disabled style="opacity:.5">world/ <span style="margin-left:auto;font-size:.7rem">generated on first start</span></button>';
+    tree.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{if(fileDirty&&!confirm('Discard unsaved changes?'))return;openFile=b.dataset.f;fileDirty=false;renderTree();showFile();});
+  }
+  function showFile(){
+    const enabled=!!openFile;
+    $('fileBody').disabled=!enabled;
+    $('fileName').textContent=openFile||'Select a file';
+    $('fileBody').value=enabled?fileContent(openFile):'';
+    $('fileSave').disabled=true;$('fileRevert').disabled=true;$('fileErr').textContent='';
+  }
+  $('fileBody').addEventListener('input',()=>{fileDirty=true;$('fileSave').disabled=false;$('fileRevert').disabled=false;});
+  $('fileRevert').onclick=()=>{$('fileBody').value=fileContent(openFile);fileDirty=false;$('fileSave').disabled=true;$('fileRevert').disabled=true;};
+  $('fileSave').onclick=()=>{
+    const v=$('fileBody').value;
+    if(openFile==='server.properties'&&!/max-players=\d+/.test(v)){$('fileErr').textContent='server.properties must contain a max-players line.';return;}
+    if(openFile==='whitelist.json'){try{JSON.parse(v)}catch(e){$('fileErr').textContent='That is not valid JSON. Check for a missing comma or bracket.';return;}}
+    write(KEY('file.'+openFile),v);fileDirty=false;$('fileSave').disabled=true;$('fileRevert').disabled=true;
+    toast('Saved <span class="mono">'+openFile+'</span>'+(st.power==='run'?'. Restart to apply.':'.'));
+  };
+  renderTree();showFile();
+
+  /* ---------- backups ---------- */
+  function renderBackups(){
+    const list=read(KEY('backups'),[]);
+    const max=RESTORE[order.planId]||2;
+    $('bCount').textContent=list.length+' / '+max+' restore points';
+    $('bNew').disabled=list.length>=max;
+    $('bList').innerHTML=list.map(b=>`<div class="item"><div><b style="font-weight:500">${esc(b.label)}</b><small>${esc(b.at)} · ${b.size} MB · ${b.kind}</small></div><button class="btn btn--sm" data-restore="${b.id}">Restore</button></div>`).join('');
+    $('bEmpty').classList.toggle('hide',list.length>0);
+    $$('[data-restore]').forEach(btn=>btn.onclick=()=>confirmBox('Restore this backup?','The current world will be replaced. Take a manual backup first if you need the current state.','Restore',()=>{log('w','Restoring backup…');setTimeout(()=>log('ok','Restore complete.'),1200);}));
+  }
+  $('bNew').onclick=()=>{
+    const list=read(KEY('backups'),[]);const max=RESTORE[order.planId]||2;
+    if(list.length>=max){toast('You have reached your restore point limit. Remove an old backup first.');return;}
+    const now=new Date();
+    list.unshift({id:'b'+Date.now().toString(36),label:'Manual backup',kind:'manual',at:now.toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}),size:(20+Math.round(Math.random()*40)/1).toString()});
+    write(KEY('backups'),list);renderBackups();toast('Backup created and stored off-node.');
+  };
+  renderBackups();
+
+  /* ---------- whitelist ---------- */
+  function renderWhite(){
+    const w=read(KEY('whitelist'),[]);
+    $('wCount').textContent=w.length+' entr'+(w.length===1?'y':'ies');
+    $('wList').innerHTML=w.map(n=>`<div class="item"><div><b style="font-weight:500">${esc(n)}</b><small>Whitelisted</small></div><button class="btn btn--sm" data-rm="${esc(n)}">Remove</button></div>`).join('');
+    $('wEmpty').classList.toggle('hide',w.length>0);
+    $$('[data-rm]').forEach(b=>b.onclick=()=>{write(KEY('whitelist'),read(KEY('whitelist'),[]).filter(x=>x!==b.dataset.rm));renderWhite();toast('Removed '+esc(b.dataset.rm)+' from the whitelist.');});
+  }
+  function addWhite(name,fromConsole){
+    if(!/^[A-Za-z0-9_]{3,16}$/.test(name)){ if(fromConsole)log('e','Invalid username: '+name);else $('wErr').textContent='Use 3–16 letters, numbers or underscores.';return false;}
+    const w=read(KEY('whitelist'),[]);
+    if(w.map(x=>x.toLowerCase()).includes(name.toLowerCase())){ if(fromConsole)log('w',name+' is already whitelisted');else $('wErr').textContent=name+' is already on the whitelist.';return false;}
+    w.push(name);write(KEY('whitelist'),w);renderWhite();
+    if(fromConsole)log('ok','Added '+name+' to the whitelist');else{$('wErr').textContent='';$('wName').value='';toast(esc(name)+' added to the whitelist.');}
+    return true;
+  }
+  $('wForm').addEventListener('submit',e=>{e.preventDefault();addWhite($('wName').value.trim(),false);});
+  renderWhite();
+
+  /* ---------- schedules ---------- */
+  function renderSched(){
+    const list=read(KEY('schedules'),[]);
+    $('sList').innerHTML=list.map(t=>`<div class="item"><div><b style="font-weight:500">${esc(t.label)}</b><small>Daily at ${t.time} UK · ${t.on?'enabled':'paused'}</small></div><div style="display:flex;gap:8px;align-items:center"><button class="toggle ${t.on?'on':''}" data-t="${t.id}" aria-label="Toggle task"></button><button class="btn btn--sm" data-del="${t.id}">Delete</button></div></div>`).join('');
+    $('sEmpty').classList.toggle('hide',list.length>0);
+    $$('[data-t]').forEach(b=>b.onclick=()=>{const l=read(KEY('schedules'),[]);const t=l.find(x=>x.id===b.dataset.t);t.on=!t.on;write(KEY('schedules'),l);renderSched();});
+    $$('[data-del]').forEach(b=>b.onclick=()=>{write(KEY('schedules'),read(KEY('schedules'),[]).filter(x=>x.id!==b.dataset.del));renderSched();toast('Task removed.');});
+  }
+  $('sType').onchange=e=>{$('sCmd').disabled=e.target.value!=='command';if(e.target.value!=='command')$('sCmd').value='';};
+  $('sForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const type=$('sType').value, time=$('sTime').value, cmd=$('sCmd').value.trim();
+    if(!time){$('sErr').textContent='Choose a time.';return;}
+    if(type==='command'&&!cmd){$('sErr').textContent='Enter the command to run.';return;}
+    $('sErr').textContent='';
+    const labels={restart:'Restart server',backup:'Create backup',command:'Run: '+cmd};
+    const l=read(KEY('schedules'),[]);
+    l.push({id:'t'+Date.now().toString(36),label:labels[type],time,on:true});
+    write(KEY('schedules'),l);renderSched();toast('Task scheduled for '+time+' UK.');
+  });
+  renderSched();
+
+  /* ---------- settings: delete ---------- */
+  $('delBtn').onclick=()=>{
+    if($('delName').value.trim()!==order.name){$('delErr').textContent='The name does not match. Type '+order.name+' exactly.';return;}
+    $('delErr').textContent='';
+    confirmBox('Delete '+order.name+'?','This removes the world, backups and files permanently.','Delete server',()=>{
+      const all=read('sift.v1.orders',[]).filter(o=>o.id!==id);write('sift.v1.orders',all);
+      ['file','backups','whitelist','schedules'].forEach(k=>{Object.keys(localStorage).filter(x=>x.startsWith('sift.v1.'+k)&&x.endsWith(id)||x.startsWith('sift.v1.'+k+'.'+id)).forEach(x=>localStorage.removeItem(x));});
+      toast('Server deleted.');setTimeout(()=>location.href='dashboard.html',700);
+    });
+  };
+
+  /* ---------- live resources ---------- */
+  setInterval(()=>{
+    const ram=order.ram||2;
+    if(st.power!=='run'){st.cpu=0;st.mem=Math.max(0,(st.mem||0)-.1);}
+    else{st.cpu=Math.max(3,Math.min(82,(st.cpu||12)+(Math.random()*12-6)));st.mem=Math.min(ram,Math.max(.6,ram*.45+Math.random()*.5));}
+    $('rCpu').textContent=Math.round(st.cpu)+'%';$('bCpu').style.width=st.cpu+'%';
+    $('rMem').textContent=st.mem.toFixed(1)+' / '+ram+' GB';$('bMem').style.width=(st.mem/ram*100)+'%';
+    $('rPl').textContent='0 / '+SLOTS;
+    $('rTps').textContent=st.power==='run'?'20.0':'—';
+    const pts=[];for(let i=0;i<30;i++)pts.push(st.power==='run'?40+Math.sin(i/3+Date.now()/4000)*14+Math.random()*4:105);
+    $('spark').innerHTML='<polyline fill="none" stroke="#57B8FF" stroke-width="2" points="'+pts.map((y,i)=>(i*10.3).toFixed(1)+','+y.toFixed(1)).join(' ')+'"/>';
+  },1500);
+})();
+</script>
+</body>
+</html>
