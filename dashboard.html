@@ -67,8 +67,19 @@ h1{font-weight:500;font-size:1.7rem;letter-spacing:-.02em;margin:0}
 .menu{display:none;background:none;border:1px solid var(--line2);color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer}
 @media(max-width:900px){.app{grid-template-columns:1fr}aside{position:fixed;inset:0 auto 0 0;width:240px;transform:translateX(-100%);transition:.25s;z-index:20}aside.open{transform:none}.menu{display:inline-block}.g4{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}.srv{grid-template-columns:1fr;gap:8px}main{padding:20px 18px}}
 </style>
+<style id="sift-progress-style">
+#siftProgress{position:fixed;top:0;left:0;right:0;height:3px;z-index:99999;pointer-events:none;opacity:0;transition:opacity .3s ease}
+#siftProgress::before{content:"";position:absolute;inset:0;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#3ddc97,#5aa9ff,#3ddc97);background-size:200% 100%;box-shadow:0 0 12px rgba(61,220,151,.6)}
+#siftProgress.on{opacity:1}
+#siftProgress.run::before{animation:siftRun 1.6s cubic-bezier(.2,.7,.2,1) forwards,siftShine 1.2s linear infinite}
+#siftProgress.done::before{transform:scaleX(1);transition:transform .25s ease}
+@keyframes siftRun{0%{transform:scaleX(0)}60%{transform:scaleX(.75)}100%{transform:scaleX(.92)}}
+@keyframes siftShine{to{background-position:200% 0}}
+@media (prefers-reduced-motion:reduce){#siftProgress.run::before{animation:none;transform:scaleX(.5)}}
+</style>
 </head>
 <body>
+<div id="siftProgress" aria-hidden="true"></div>
 <div class="app">
   <aside id="side">
     <a class="brand" href="./"><img src="assets/images/sift-logo.png" alt="SIFT"><b>SIFT</b></a>
@@ -197,6 +208,26 @@ h1{font-weight:500;font-size:1.7rem;letter-spacing:-.02em;margin:0}
 
   $('signout').onclick=()=>{localStorage.removeItem('sift.v1.session');toast('You have been signed out.');setTimeout(()=>location.reload(),600);};
   $('menuBtn').onclick=()=>$('side').classList.toggle('open');
+})();
+</script>
+<script id="sift-progress-script">
+(function(){
+  var bar=document.getElementById('siftProgress'); if(!bar) return;
+  var t;
+  function start(){ clearTimeout(t); bar.classList.remove('done'); bar.classList.remove('run'); void bar.offsetWidth; bar.classList.add('on','run'); }
+  function finish(){ bar.classList.add('done'); t=setTimeout(function(){ bar.classList.remove('on','run','done'); },350); }
+  window.addEventListener('DOMContentLoaded', finish);
+  window.addEventListener('load', finish);
+  window.addEventListener('pageshow', function(e){ if(e.persisted) finish(); });
+  document.addEventListener('click', function(e){
+    var a=e.target.closest && e.target.closest('a[href]'); if(!a) return;
+    if(a.target==='_blank'||e.metaKey||e.ctrlKey||e.shiftKey||e.button!==0) return;
+    var u; try{ u=new URL(a.href,location.href);}catch(_){return;}
+    if(u.origin!==location.origin) return;
+    if(u.pathname===location.pathname && u.search===location.search && u.hash) return;
+    start();
+  }, true);
+  window.addEventListener('beforeunload', function(){ start(); });
 })();
 </script>
 </body>
